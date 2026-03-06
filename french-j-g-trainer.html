@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Французька: J та G</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FDF6EC;
+  --gold: #D4A017;
+  --gold-light: #F5E6C8;
+  --dark: #2C1A0E;
+  --rouge: #C0392B;
+  --bleu: #1A5276;
+  --bleu-light: #D6EAF8;
+  --vert: #1E8449;
+  --vert-light: #D5F5E3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--cream);
+  font-family: 'Nunito', sans-serif;
+  color: var(--dark);
+  min-height: 100vh;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background: radial-gradient(ellipse at 15% 15%, rgba(212,160,23,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 85%, rgba(26,82,118,0.06) 0%, transparent 55%);
+  pointer-events: none; z-index: 0;
+}
+.wrap { max-width: 800px; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; position: relative; z-index: 1; }
+
+/* HEADER */
+header { text-align: center; margin-bottom: 1.8rem; animation: fadeDown 0.6s ease both; }
+.flag { font-size: 2.2rem; display: block; margin-bottom: 0.3rem; }
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,5vw,2.5rem); font-weight: 900; }
+h1 em { font-style: italic; color: var(--bleu); }
+.tagline { font-size: 0.9rem; color: #999; font-weight: 600; margin-top: 0.3rem; }
+
+/* RULE */
+.rule-card {
+  background: white; border: 2px solid var(--gold); border-radius: 18px;
+  padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; box-shadow: 4px 4px 0 var(--gold);
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.rule-card h2 { font-family: 'Playfair Display', serif; font-size: 0.82rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+.rules-row { display: flex; gap: 1rem; }
+.rule-box { flex: 1; border-radius: 12px; padding: 0.8rem 1rem; text-align: center; }
+.rule-box.jb { background: #FEF9E7; border: 2px solid #F0B429; }
+.rule-box.gb { background: var(--bleu-light); border: 2px solid var(--bleu); }
+.rl { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; line-height: 1; }
+.jb .rl { color: var(--gold); } .gb .rl { color: var(--bleu); }
+.rarrow { font-size: 1rem; color: #aaa; margin: 0.2rem 0; }
+.rs { font-size: 1.4rem; font-weight: 900; color: var(--rouge); }
+.rc { font-size: 0.72rem; color: #666; font-weight: 700; margin-top: 0.2rem; }
+.re { font-size: 0.78rem; font-style: italic; color: #888; margin-top: 0.3rem; }
+
+/* TABS */
+.tab-nav { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+.tab-btn {
+  flex: 1; padding: 0.7rem 0.4rem; border: 2px solid #e0d0b0; border-radius: 14px;
+  background: white; font-family: 'Nunito', sans-serif; font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; color: #999; text-align: center; line-height: 1.4;
+}
+.tab-btn .tn { display: block; font-size: 1.1rem; margin-bottom: 0.15rem; }
+.tab-btn.active { background: var(--dark); color: white; border-color: var(--dark); }
+.tab-btn.done { border-color: var(--vert); color: var(--vert); background: var(--vert-light); }
+.tab-btn.done.active { background: var(--vert); color: white; }
+
+/* PANELS */
+.ex-panel { display: none; animation: fadeUp 0.4s ease both; }
+.ex-panel.active { display: block; }
+.ex-header { margin-bottom: 1.2rem; }
+.ex-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; }
+.ex-desc { font-size: 0.85rem; color: #888; font-weight: 600; margin-top: 0.25rem; }
+
+.score-pill {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  background: white; border: 2px solid #e8d5b0; border-radius: 50px;
+  padding: 0.4rem 1rem; font-size: 0.85rem; font-weight: 700; margin-bottom: 1.1rem;
+}
+.sc { color: var(--vert); } .sw { color: var(--rouge); }
+.prog-wrap { height: 6px; background: #eee; border-radius: 99px; overflow: hidden; margin-bottom: 1.5rem; }
+.prog-bar { height: 100%; background: linear-gradient(90deg, var(--bleu), var(--gold)); border-radius: 99px; transition: width 0.4s ease; }
+
+/* EX1 question card */
+.q-card {
+  background: white; border: 2px solid #e8d5b0; border-radius: 22px;
+  padding: 1.8rem 1.5rem; text-align: center; margin-bottom: 1.2rem;
+  box-shadow: 4px 4px 0 #e0c89a; min-height: 160px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.q-num { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #ccc; margin-bottom: 0.6rem; }
+.q-word { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,7vw,3.4rem); font-weight: 700; margin-bottom: 0.3rem; }
+.q-word .hl { color: var(--bleu); position: relative; }
+.q-word .hl::after { content: ''; position: absolute; bottom: 1px; left: 0; right: 0; height: 4px; background: var(--gold); border-radius: 2px; }
+.q-tr { font-size: 0.87rem; color: #bbb; font-style: italic; }
+.q-ask { font-size: 0.9rem; font-weight: 700; color: #8B4513; margin-top: 0.6rem; }
+
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+.opt {
+  background: white; border: 3px solid #e0d0b0; border-radius: 14px;
+  padding: 1rem 0.8rem; font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; cursor: pointer; transition: all 0.18s; text-align: center;
+}
+.opt sub { display: block; font-family: 'Nunito', sans-serif; font-size: 0.68rem; font-weight: 600; color: #bbb; margin-top: 0.1rem; }
+.opt:hover:not(:disabled) { border-color: var(--bleu); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(26,82,118,0.12); }
+.opt.correct { border-color: var(--vert) !important; background: var(--vert-light); color: var(--vert); }
+.opt.correct sub { color: var(--vert); }
+.opt.wrong { border-color: var(--rouge) !important; background: #FDEDEC; color: var(--rouge); animation: shake 0.4s ease; }
+
+.fb {
+  border-radius: 14px; padding: 1rem 1.2rem; font-weight: 700; font-size: 0.9rem;
+  text-align: center; display: none; margin-bottom: 1rem;
+  animation: pop 0.3s cubic-bezier(.34,1.56,.64,1) both;
+}
+.fb.show { display: block; }
+.fb.ok { background: var(--vert-light); border: 2px solid var(--vert); color: var(--vert); }
+.fb.bad { background: #FDEDEC; border: 2px solid var(--rouge); color: var(--rouge); }
+.fb .fw { font-family: 'Playfair Display', serif; font-size: 1.15rem; display: block; margin-bottom: 0.2rem; }
+.fb .fe { font-size: 0.8rem; opacity: 0.85; }
+
+.next-btn {
+  display: none; width: 100%; background: var(--dark); color: white;
+  border: none; border-radius: 14px; padding: 0.9rem; font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; margin-bottom: 1rem;
+}
+.next-btn.show { display: block; animation: fadeUp 0.3s ease both; }
+.next-btn:hover { background: var(--bleu); transform: translateY(-2px); }
+
+/* EX2 */
+.blank-card {
+  background: white; border: 2px solid #e8d5b0; border-radius: 22px;
+  padding: 1.5rem; margin-bottom: 1rem; box-shadow: 4px 4px 0 #e0c89a;
+}
+.blank-word {
+  font-family: 'Playfair Display', serif; font-size: clamp(2rem,6vw,3rem);
+  font-weight: 700; text-align: center; margin-bottom: 0.5rem; letter-spacing: 0.04em;
+}
+.blank-word .gap {
+  display: inline-block; border-bottom: 4px solid var(--gold); min-width: 1.1ch;
+  background: #FEF9E7; border-radius: 4px; padding: 0 0.12em; margin: 0 0.04em;
+  color: #FEF9E7; transition: all 0.3s;
+}
+.blank-word .gap.show-gap { color: var(--dark); }
+.blank-word .gap.filled-right { color: var(--vert); border-color: var(--vert); background: var(--vert-light); }
+.blank-word .gap.filled-wrong { color: var(--rouge); border-color: var(--rouge); background: #FDEDEC; }
+.blank-tr { text-align: center; font-size: 0.87rem; color: #aaa; font-style: italic; margin-bottom: 1rem; }
+.listen-area { text-align: center; margin-bottom: 0.5rem; }
+.listen-hint { font-size: 0.78rem; color: #bbb; font-weight: 600; margin-bottom: 0.5rem; }
+.speak-btn {
+  background: white; border: 2px solid #ddd; border-radius: 50px;
+  padding: 0.45rem 1.1rem; font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; color: #888; font-family: 'Nunito', sans-serif; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.speak-btn:hover:not(:disabled) { border-color: var(--bleu); color: var(--bleu); }
+.speak-btn.speaking { border-color: var(--gold); color: var(--gold); }
+.speak-btn:disabled { opacity: 0.35; cursor: default; }
+
+.letter-opts { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 1rem; }
+.letter-opt {
+  background: white; border: 3px solid #e0d0b0; border-radius: 12px;
+  padding: 0.65rem 1.3rem; font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700; cursor: pointer; transition: all 0.18s;
+}
+.letter-opt:hover:not(:disabled) { border-color: var(--bleu); transform: translateY(-2px); }
+.letter-opt.correct { border-color: var(--vert) !important; background: var(--vert-light); color: var(--vert); }
+.letter-opt.wrong { border-color: var(--rouge) !important; background: #FDEDEC; color: var(--rouge); animation: shake 0.4s ease; }
+
+/* EX3 SORT */
+.sort-intro { font-size: 0.88rem; color: #777; font-weight: 600; text-align: center; margin-bottom: 1rem; }
+.word-pool {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+  min-height: 58px; background: white; border: 2px dashed #e0d0b0;
+  border-radius: 16px; padding: 0.8rem; margin-bottom: 1.1rem;
+}
+.word-chip {
+  background: white; border: 2.5px solid #ccc; border-radius: 14px;
+  padding: 0.6rem 1.2rem; font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; cursor: pointer; transition: all 0.2s; user-select: none;
+  letter-spacing: 0.05em;
+}
+.word-chip:hover:not(.placed) { border-color: var(--bleu); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.word-chip.selected { border-color: var(--bleu); background: var(--bleu-light); }
+.word-chip.placed { opacity: 0.3; pointer-events: none; }
+
+.columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.col-zone {
+  border: 3px dashed #ddd; border-radius: 18px; padding: 1rem; min-height: 130px; transition: all 0.2s;
+  cursor: pointer;
+}
+.col-zone:hover { transform: scale(1.01); }
+.col-zone.zh-zone { border-color: #F0B429; background: #FFFDE7; }
+.col-zone.g-zone  { border-color: var(--bleu); background: #EBF5FB; }
+.col-zone.drop-ready { box-shadow: 0 0 0 3px rgba(26,82,118,0.3); }
+.col-header { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 900; line-height: 1; margin-bottom: 0.3rem; }
+.zh-zone .col-header { color: #D4A017; }
+.g-zone .col-header  { color: var(--bleu); }
+.col-sub { text-align: center; font-size: 0.7rem; font-weight: 700; color: #aaa; margin-bottom: 0.7rem; }
+.col-items { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; min-height: 36px; }
+.col-chip {
+  padding: 0.4rem 1rem; border-radius: 12px; font-family: 'Playfair Display', serif;
+  font-size: 1.35rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 2px solid transparent;
+  letter-spacing: 0.05em;
+}
+.zh-zone .col-chip { background: #FEF9E7; border-color: #F0B429; }
+.g-zone  .col-chip { background: var(--bleu-light); border-color: var(--bleu); }
+.col-chip:hover:not(.locked) { transform: scale(1.07); }
+.col-chip.right { background: var(--vert-light) !important; border-color: var(--vert) !important; color: var(--vert) !important; }
+.col-chip.wrong-chip { background: #FDEDEC !important; border-color: var(--rouge) !important; color: var(--rouge) !important; }
+.col-chip.locked { cursor: default; }
+
+.check-sort-btn {
+  display: block; width: 100%; background: var(--bleu); color: white;
+  border: none; border-radius: 14px; padding: 0.85rem; font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; margin-bottom: 1rem;
+}
+.check-sort-btn:hover:not(:disabled) { background: var(--dark); }
+.check-sort-btn:disabled { opacity: 0.45; cursor: default; }
+.sort-result {
+  display: none; border-radius: 14px; padding: 1rem 1.2rem; font-weight: 700;
+  text-align: center; margin-bottom: 1rem; animation: pop 0.3s cubic-bezier(.34,1.56,.64,1) both;
+}
+.sort-result.show { display: block; }
+.sort-result.perfect { background: var(--vert-light); border: 2px solid var(--vert); color: var(--vert); }
+.sort-result.partial { background: #FEF9E7; border: 2px solid var(--gold); color: #8B6000; }
+
+/* FINAL */
+.result-screen { display: none; text-align: center; padding: 1rem 0; animation: pop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+.result-screen.show { display: block; }
+.result-card { background: white; border: 3px solid var(--gold); border-radius: 24px; padding: 2rem; box-shadow: 6px 6px 0 var(--gold); }
+.res-emoji { font-size: 3.5rem; margin-bottom: 0.5rem; }
+.res-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; }
+.res-score { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--bleu); margin: 0.8rem 0; }
+.res-msg { font-size: 0.95rem; color: #666; font-weight: 600; margin-bottom: 1.5rem; }
+.restart-btn {
+  background: var(--gold); color: var(--dark); border: none; border-radius: 50px;
+  padding: 0.8rem 2rem; font-family: 'Nunito', sans-serif; font-size: 1rem;
+  font-weight: 800; cursor: pointer; box-shadow: 3px 3px 0 #a07010; transition: all 0.2s;
+}
+.restart-btn:hover { transform: translateY(-2px); }
+
+@keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes pop      { from{opacity:0;transform:scale(0.85)}       to{opacity:1;transform:scale(1)} }
+@keyframes shake    { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="flag">🇫🇷</span>
+  <h1>Le son <em>[ж]</em></h1>
+  <p class="tagline">Три вправи • J та G</p>
+</header>
+
+<div class="rule-card">
+  <h2>📌 Правило</h2>
+  <div class="rules-row">
+    <div class="rule-box jb">
+      <div class="rl">J</div><div class="rarrow">→</div>
+      <div class="rs">[ж]</div><div class="rc">завжди</div>
+      <div class="re">je, jour, bijou</div>
+    </div>
+    <div class="rule-box gb">
+      <div class="rl">G</div><div class="rarrow">→</div>
+      <div class="rs">[ж]</div><div class="rc">перед e, i, y</div>
+      <div class="re">génie, girafe, gym</div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" id="tab1" onclick="goTab(1)"><span class="tn">1️⃣</span>Який звук?</button>
+  <button class="tab-btn" id="tab2" onclick="goTab(2)"><span class="tn">2️⃣</span>Вставити букву</button>
+  <button class="tab-btn" id="tab3" onclick="goTab(3)"><span class="tn">3️⃣</span>Розсортувати</button>
+</div>
+
+<!-- ══ EX 1 ══ -->
+<div class="ex-panel active" id="ex1">
+  <div class="ex-header">
+    <div class="ex-title">Вправа 1 — Який звук?</div>
+    <div class="ex-desc">Подивись на виділену букву і обери, як вона вимовляється. Без звуку!</div>
+  </div>
+  <div class="score-pill">✅ <span class="sc" id="e1-c">0</span> &nbsp;❌ <span class="sw" id="e1-w">0</span></div>
+  <div class="prog-wrap"><div class="prog-bar" id="e1-prog" style="width:0%"></div></div>
+  <div class="q-card" id="e1-qcard">
+    <div class="q-num" id="e1-num">Питання 1 з 8</div>
+    <div class="q-word" id="e1-word"></div>
+    <div class="q-tr" id="e1-tr"></div>
+    <div class="q-ask">Як вимовляється виділена буква?</div>
+  </div>
+  <div class="opts" id="e1-opts"></div>
+  <div class="fb" id="e1-fb"><span class="fw" id="e1-fw"></span><span class="fe" id="e1-fe"></span></div>
+  <button class="next-btn" id="e1-next" onclick="e1Next()">Далі →</button>
+</div>
+
+<!-- ══ EX 2 ══ -->
+<div class="ex-panel" id="ex2">
+  <div class="ex-header">
+    <div class="ex-title">Вправа 2 — Вставити букву</div>
+    <div class="ex-desc">Вибери правильну букву. Після відповіді — послухай для перевірки 🔊</div>
+  </div>
+  <div class="score-pill">✅ <span class="sc" id="e2-c">0</span> &nbsp;❌ <span class="sw" id="e2-w">0</span></div>
+  <div class="prog-wrap"><div class="prog-bar" id="e2-prog" style="width:0%"></div></div>
+  <div class="blank-card" id="e2-card">
+    <div class="blank-word" id="e2-word"></div>
+    <div class="blank-tr" id="e2-tr"></div>
+    <div class="listen-area">
+      <div class="listen-hint" id="e2-hint">Спочатку вибери букву ↓</div>
+      <button class="speak-btn" id="e2-speak" onclick="e2Speak()" disabled>🔊 Послухати</button>
+    </div>
+  </div>
+  <div class="letter-opts" id="e2-opts"></div>
+  <div class="fb" id="e2-fb"><span class="fw" id="e2-fw"></span><span class="fe" id="e2-fe"></span></div>
+  <button class="next-btn" id="e2-next" onclick="e2Next()">Далі →</button>
+</div>
+
+<!-- ══ EX 3 ══ -->
+<div class="ex-panel" id="ex3">
+  <div class="ex-header">
+    <div class="ex-title">Вправа 3 — Розсортувати поєднання</div>
+    <div class="ex-desc">Натисни картку → потім натисни на колонку: який звук дає це поєднання?</div>
+  </div>
+  <div class="word-pool" id="e3-pool"></div>
+  <div class="columns">
+    <div class="col-zone zh-zone" id="col-zh" onclick="e3Drop('zh')">
+      <div class="col-header">[ж]</div>
+      <div class="col-sub">J завжди · G перед e/i/y</div>
+      <div class="col-items" id="items-zh"></div>
+    </div>
+    <div class="col-zone g-zone" id="col-g" onclick="e3Drop('g')">
+      <div class="col-header">[г]</div>
+      <div class="col-sub">G перед a/o/u/приголосною</div>
+      <div class="col-items" id="items-g"></div>
+    </div>
+  </div>
+  <button class="check-sort-btn" id="e3-check" onclick="e3Check()" disabled>Перевірити ✓</button>
+  <div class="sort-result" id="e3-result"></div>
+  <button class="next-btn" id="e3-again" style="display:none" onclick="e3Init()">🔄 Ще раз цю вправу</button>
+</div>
+
+<!-- FINAL -->
+<div class="result-screen" id="final">
+  <div class="result-card">
+    <div class="res-emoji" id="f-emoji">🎉</div>
+    <div class="res-title" id="f-title">Parfait!</div>
+    <div class="res-score" id="f-score">16/16</div>
+    <div class="res-msg" id="f-msg"></div>
+    <button class="restart-btn" onclick="fullRestart()">🔄 Спочатку!</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// DATA
+const words = [
+  {w:"je",      l:"j",pos:0,sound:"zh",tr:"я",        rule:"J завжди = [ж]"},
+  {w:"jour",    l:"j",pos:0,sound:"zh",tr:"день",      rule:"J завжди = [ж]"},
+  {w:"joli",    l:"j",pos:0,sound:"zh",tr:"гарний",    rule:"J завжди = [ж]"},
+  {w:"bijou",   l:"j",pos:2,sound:"zh",tr:"прикраса",  rule:"J завжди = [ж]"},
+  {w:"jardin",  l:"j",pos:0,sound:"zh",tr:"сад",       rule:"J завжди = [ж]"},
+  {w:"jaune",   l:"j",pos:0,sound:"zh",tr:"жовтий",    rule:"J завжди = [ж]"},
+  {w:"jouer",   l:"j",pos:0,sound:"zh",tr:"грати",     rule:"J завжди = [ж]"},
+  {w:"girafe",  l:"g",pos:0,sound:"zh",tr:"жираф",     rule:"G перед I = [ж]"},
+  {w:"génie",   l:"g",pos:0,sound:"zh",tr:"геній",     rule:"G перед E = [ж]"},
+  {w:"gymnase", l:"g",pos:0,sound:"zh",tr:"гімназія",  rule:"G перед Y = [ж]"},
+  {w:"général", l:"g",pos:0,sound:"zh",tr:"генерал",   rule:"G перед E = [ж]"},
+  {w:"gentil",  l:"g",pos:0,sound:"zh",tr:"добрий",    rule:"G перед E = [ж]"},
+  {w:"geste",   l:"g",pos:0,sound:"zh",tr:"жест",      rule:"G перед E = [ж]"},
+  {w:"garçon",  l:"g",pos:0,sound:"g", tr:"хлопець",   rule:"G перед A = [г]"},
+  {w:"goût",    l:"g",pos:0,sound:"g", tr:"смак",      rule:"G перед O = [г]"},
+  {w:"grand",   l:"g",pos:0,sound:"g", tr:"великий",   rule:"G перед приголосною = [г]"},
+  {w:"gâteau",  l:"g",pos:0,sound:"g", tr:"торт",      rule:"G перед A = [г]"},
+  {w:"guitare", l:"g",pos:0,sound:"g", tr:"гітара",    rule:"G перед U = [г]"},
+  {w:"globe",   l:"g",pos:0,sound:"g", tr:"глобус",    rule:"G перед приголосною = [г]"},
+  {w:"gorille", l:"g",pos:0,sound:"g", tr:"горила",    rule:"G перед O = [г]"},
+];
+
+// пари буква+голосна для вправи 3
+const E3_PAIRS = [
+  {pair:"ge", sound:"zh", rule:"G + E = [ж]"},
+  {pair:"gi", sound:"zh", rule:"G + I = [ж]"},
+  {pair:"gy", sound:"zh", rule:"G + Y = [ж]"},
+  {pair:"ga", sound:"g",  rule:"G + A = [г]"},
+  {pair:"go", sound:"g",  rule:"G + O = [г]"},
+  {pair:"gu", sound:"g",  rule:"G + U = [г]"},
+  {pair:"gé", sound:"zh", rule:"G + É = [ж]"},
+  {pair:"ja", sound:"zh", rule:"J = [ж] завжди"},
+  {pair:"je", sound:"zh", rule:"J = [ж] завжди"},
+  {pair:"ji", sound:"zh", rule:"J = [ж] завжди"},
+  {pair:"jo", sound:"zh", rule:"J = [ж] завжди"},
+  {pair:"ju", sound:"zh", rule:"J = [ж] завжди"},
+];
+
+function shuffle(a){return [...a].sort(()=>Math.random()-0.5);}
+
+// TTS
+let frVoice=null;
+function initTTS(){
+  if(!window.speechSynthesis)return;
+  const load=()=>{
+    const vv=speechSynthesis.getVoices();
+    frVoice=vv.find(v=>v.lang==='fr-FR')||vv.find(v=>v.lang.startsWith('fr'))||null;
+  };
+  load(); speechSynthesis.onvoiceschanged=load;
+}
+function speak(word,btn){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='fr-FR'; u.rate=0.82;
+  if(frVoice)u.voice=frVoice;
+  if(btn){btn.classList.add('speaking');u.onend=u.onerror=()=>btn.classList.remove('speaking');}
+  speechSynthesis.speak(u);
+}
+
+// TABS
+let e1Done=false,e2Done=false,e3Done=false;
+function goTab(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById('ex'+i).classList.toggle('active',i===n);
+    const t=document.getElementById('tab'+i);
+    t.classList.remove('active');
+    if(i===n)t.classList.add('active');
+  });
+}
+
+// ═══ EX 1 ═══
+const E1_TOTAL=8;
+let e1q=[],e1idx=0,e1c=0,e1w=0;
+
+function e1Init(){
+  e1q=shuffle(words).slice(0,E1_TOTAL);
+  e1idx=0;e1c=0;e1w=0;
+  document.getElementById('e1-c').textContent=0;
+  document.getElementById('e1-w').textContent=0;
+  document.getElementById('e1-prog').style.width='0%';
+  document.getElementById('e1-fb').className='fb';
+  document.getElementById('e1-next').className='next-btn';
+  document.getElementById('e1-qcard').style.display='';
+  document.getElementById('e1-opts').style.display='';
+  document.getElementById('e1-next').textContent='Далі →';
+  document.getElementById('e1-next').onclick=e1Next;
+  e1Render();
+}
+
+function e1Render(){
+  if(e1idx>=E1_TOTAL){e1Finish();return;}
+  const q=e1q[e1idx];
+  document.getElementById('e1-num').textContent=`Питання ${e1idx+1} з ${E1_TOTAL}`;
+  document.getElementById('e1-prog').style.width=`${(e1idx/E1_TOTAL)*100}%`;
+  const i=q.w.indexOf(q.l);
+  document.getElementById('e1-word').innerHTML=q.w.slice(0,i)+`<span class="hl">${q.w[i]}</span>`+q.w.slice(i+1);
+  document.getElementById('e1-tr').textContent=q.tr;
+  document.getElementById('e1-fb').className='fb';
+  document.getElementById('e1-next').className='next-btn';
+  const ans=q.sound==='zh'?'[ж]':'[г]';
+  const opts=q.sound==='zh'?shuffle(['[ж]','[г]','[з]','[ш]']):shuffle(['[г]','[ж]','[к]','[з]']);
+  const hints={'[ж]':'як у "жук"','[г]':'як у "гора"','[з]':'як у "зуб"','[ш]':'як у "шум"','[к]':'як у "кіт"'};
+  const div=document.getElementById('e1-opts');div.innerHTML='';
+  opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='opt';
+    btn.innerHTML=o+`<sub>${hints[o]||''}</sub>`;
+    btn.onclick=()=>e1Check(o,btn,ans,q);
+    div.appendChild(btn);
+  });
+  const card=document.getElementById('e1-qcard');
+  card.style.animation='none';
+  requestAnimationFrame(()=>{card.style.animation='fadeUp 0.4s ease both';});
+}
+
+function e1Check(chosen,btn,ans,q){
+  document.querySelectorAll('#e1-opts .opt').forEach(b=>b.disabled=true);
+  const ok=chosen===ans;
+  if(ok){btn.classList.add('correct');e1c++;document.getElementById('e1-c').textContent=e1c;}
+  else{
+    btn.classList.add('wrong');e1w++;document.getElementById('e1-w').textContent=e1w;
+    document.querySelectorAll('#e1-opts .opt').forEach(b=>{if(b.textContent.startsWith(ans))b.classList.add('correct');});
+  }
+  const fb=document.getElementById('e1-fb');
+  fb.className='fb '+(ok?'ok':'bad')+' show';
+  document.getElementById('e1-fw').textContent=(ok?'✅ Правильно! ':'❌ Не зовсім. ')+q.w;
+  document.getElementById('e1-fe').textContent=q.rule;
+  document.getElementById('e1-next').className='next-btn show';
+}
+
+function e1Next(){e1idx++;e1Render();}
+
+function e1Finish(){
+  e1Done=true;
+  document.getElementById('tab2').classList.add('done');
+  document.getElementById('e1-qcard').style.display='none';
+  document.getElementById('e1-opts').style.display='none';
+  const fb=document.getElementById('e1-fb');
+  fb.className='fb ok show';
+  document.getElementById('e1-fw').textContent=`🎉 Вправу 1 завершено! ${e1c}/${E1_TOTAL}`;
+  document.getElementById('e1-fe').textContent='Переходь до вправи 2 →';
+  const nxt=document.getElementById('e1-next');
+  nxt.className='next-btn show';nxt.textContent='Вправа 2 →';
+  nxt.onclick=()=>goTab(2);
+}
+
+// ═══ EX 2 ═══
+const E2_TOTAL=8;
+let e2q=[],e2idx=0,e2c=0,e2w=0,e2ans=false;
+
+function e2Init(){
+  e2q=shuffle(words).slice(0,E2_TOTAL);
+  e2idx=0;e2c=0;e2w=0;
+  document.getElementById('e2-c').textContent=0;
+  document.getElementById('e2-w').textContent=0;
+  document.getElementById('e2-prog').style.width='0%';
+  document.getElementById('e2-card').style.display='';
+  document.getElementById('e2-opts').style.display='';
+  document.getElementById('e2-next').textContent='Далі →';
+  document.getElementById('e2-next').onclick=e2Next;
+  e2Render();
+}
+
+function e2Render(){
+  if(e2idx>=E2_TOTAL){e2Finish();return;}
+  e2ans=false;
+  const q=e2q[e2idx];
+  document.getElementById('e2-prog').style.width=`${(e2idx/E2_TOTAL)*100}%`;
+  const i=q.w.indexOf(q.l);
+  document.getElementById('e2-word').innerHTML=`<span class="gap show-gap" id="e2-gap">?</span>`+q.w.slice(i+1);
+  document.getElementById('e2-tr').textContent=q.tr+' — звук: ['+(q.sound==='zh'?'ж':'г')+']';
+  const spBtn=document.getElementById('e2-speak');
+  spBtn.disabled=true;spBtn.classList.remove('speaking');spBtn.dataset.word='';
+  document.getElementById('e2-hint').textContent='Спочатку вибери букву ↓';
+  document.getElementById('e2-fb').className='fb';
+  document.getElementById('e2-next').className='next-btn';
+  let opts,ans;
+  if(q.l==='j'){opts=shuffle(['J','G','Z','C']);ans='J';}
+  else if(q.sound==='zh'){opts=shuffle(['G','J','GU','C']);ans='G';}
+  else{opts=shuffle(['G','J','GE','C']);ans='G';}
+  const div=document.getElementById('e2-opts');div.innerHTML='';
+  opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='letter-opt';btn.textContent=o;
+    btn.onclick=()=>e2Check(o,btn,ans,q);
+    div.appendChild(btn);
+  });
+}
+
+function e2Check(chosen,btn,ans,q){
+  if(e2ans)return;
+  e2ans=true;
+  document.querySelectorAll('#e2-opts .letter-opt').forEach(b=>b.disabled=true);
+  const ok=chosen===ans;
+  const gap=document.getElementById('e2-gap');
+  gap.textContent=chosen;
+  gap.className='gap '+(ok?'filled-right':'filled-wrong');
+  if(ok){btn.classList.add('correct');e2c++;document.getElementById('e2-c').textContent=e2c;}
+  else{
+    btn.classList.add('wrong');e2w++;document.getElementById('e2-w').textContent=e2w;
+    document.querySelectorAll('#e2-opts .letter-opt').forEach(b=>{if(b.textContent===ans)b.classList.add('correct');});
+    setTimeout(()=>{gap.textContent=ans;gap.className='gap filled-right';},600);
+  }
+  const spBtn=document.getElementById('e2-speak');
+  spBtn.disabled=false;spBtn.dataset.word=q.w;
+  document.getElementById('e2-hint').textContent='Послухай для перевірки 👇';
+  const fb=document.getElementById('e2-fb');
+  fb.className='fb '+(ok?'ok':'bad')+' show';
+  document.getElementById('e2-fw').textContent=(ok?'✅ ':'❌ ')+q.w;
+  document.getElementById('e2-fe').textContent=q.rule;
+  document.getElementById('e2-next').className='next-btn show';
+}
+
+function e2Speak(){speak(document.getElementById('e2-speak').dataset.word,document.getElementById('e2-speak'));}
+function e2Next(){e2idx++;e2Render();}
+
+function e2Finish(){
+  e2Done=true;
+  document.getElementById('tab3').classList.add('done');
+  document.getElementById('e2-card').style.display='none';
+  document.getElementById('e2-opts').style.display='none';
+  const fb=document.getElementById('e2-fb');
+  fb.className='fb ok show';
+  document.getElementById('e2-fw').textContent=`🎉 Вправу 2 завершено! ${e2c}/${E2_TOTAL}`;
+  document.getElementById('e2-fe').textContent='Переходь до вправи 3 →';
+  const nxt=document.getElementById('e2-next');
+  nxt.className='next-btn show';nxt.textContent='Вправа 3 →';
+  nxt.onclick=()=>goTab(3);
+}
+
+// ═══ EX 3 ═══
+let e3selected=null,e3placed={};
+
+function e3Init(){
+  e3selected=null;e3placed={};
+  document.getElementById('e3-result').className='sort-result';
+  document.getElementById('e3-check').disabled=true;
+  document.getElementById('e3-again').style.display='none';
+  document.getElementById('items-zh').innerHTML='';
+  document.getElementById('items-g').innerHTML='';
+  document.getElementById('col-zh').onclick=()=>e3Drop('zh');
+  document.getElementById('col-g').onclick=()=>e3Drop('g');
+  const pool=document.getElementById('e3-pool');pool.innerHTML='';
+  shuffle(E3_PAIRS).forEach(item=>{
+    const chip=document.createElement('div');
+    chip.className='word-chip';
+    chip.textContent=item.pair;
+    chip.dataset.pair=item.pair;chip.dataset.sound=item.sound;chip.dataset.rule=item.rule;
+    chip.onclick=()=>e3Select(chip);
+    pool.appendChild(chip);
+  });
+}
+
+function e3Select(chip){
+  if(chip.classList.contains('placed'))return;
+  document.querySelectorAll('.word-chip.selected').forEach(c=>c.classList.remove('selected'));
+  if(e3selected===chip){e3selected=null;return;}
+  chip.classList.add('selected');
+  e3selected=chip;
+}
+
+function e3Drop(col){
+  if(!e3selected)return;
+  const chip=e3selected;
+  chip.classList.remove('selected');chip.classList.add('placed');
+  e3selected=null;
+  const colChip=document.createElement('div');
+  colChip.className='col-chip';colChip.textContent=chip.dataset.pair;
+  colChip.dataset.pair=chip.dataset.pair;colChip.dataset.sound=chip.dataset.sound;
+  colChip.dataset.rule=chip.dataset.rule;colChip.dataset.col=col;
+  colChip.onclick=()=>e3Return(colChip,chip);
+  document.getElementById('items-'+col).appendChild(colChip);
+  e3placed[chip.dataset.pair]=col;
+  if(Object.keys(e3placed).length===E3_PAIRS.length)document.getElementById('e3-check').disabled=false;
+}
+
+function e3Return(colChip,origChip){
+  if(colChip.classList.contains('locked'))return;
+  delete e3placed[origChip.dataset.pair];
+  colChip.remove();origChip.classList.remove('placed');
+  if(Object.keys(e3placed).length<E3_PAIRS.length)document.getElementById('e3-check').disabled=true;
+}
+
+function e3Check(){
+  let correct=0;
+  document.querySelectorAll('.col-chip').forEach(chip=>{
+    chip.classList.add('locked');
+    const ok=(chip.dataset.sound==='zh')===(chip.dataset.col==='zh');
+    chip.classList.add(ok?'right':'wrong-chip');
+    if(ok)correct++;
+  });
+  document.getElementById('e3-check').disabled=true;
+  document.getElementById('col-zh').onclick=null;
+  document.getElementById('col-g').onclick=null;
+  const total=E3_PAIRS.length;
+  const res=document.getElementById('e3-result');
+  const perfect=correct===total;
+  res.className='sort-result '+(perfect?'perfect':'partial')+' show';
+  res.textContent=perfect
+    ?`🏆 Ідеально! Всі ${total} поєднань на місці!`
+    :`${correct}/${total} правильно. Червоні — неправильні. Спробуй ще!`;
+  document.getElementById('e3-again').style.display='block';
+  e3Done=perfect;
+  if(e1Done&&e2Done&&perfect)setTimeout(showFinal,800);
+}
+
+// FINAL
+function showFinal(){
+  const tot=E1_TOTAL+E2_TOTAL,got=e1c+e2c,pct=Math.round(got/tot*100);
+  document.getElementById('final').className='result-screen show';
+  document.getElementById('f-score').textContent=`${got}/${tot}`;
+  let emoji,title,msg;
+  if(pct>=90){emoji='🏆';title='Parfait!';msg='Бездоганно! Ти чудово знаєш правило J і G! 🌟';}
+  else if(pct>=70){emoji='🎉';title='Très bien!';msg='Дуже добре! Ще трохи практики — і буде parfait!';}
+  else{emoji='💪';title='Continue!';msg='Хороший початок! Повтори правило і спробуй знову.';}
+  document.getElementById('f-emoji').textContent=emoji;
+  document.getElementById('f-title').textContent=title;
+  document.getElementById('f-msg').textContent=msg;
+}
+
+function fullRestart(){
+  document.getElementById('final').className='result-screen';
+  e1Done=false;e2Done=false;e3Done=false;
+  ['tab1','tab2','tab3'].forEach(id=>{
+    const t=document.getElementById(id);t.classList.remove('done','active');
+  });
+  document.getElementById('tab1').classList.add('active');
+  e1Init();e2Init();e3Init();
+  goTab(1);
+}
+
+initTTS();e1Init();e2Init();e3Init();
+</script>
+</body>
+</html>
