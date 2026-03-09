@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🌸 La Taxe Rose — Vocabulaire</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;background:#1a0a12;color:#f0e4ec;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
+  h1{font-family:'Playfair Display',serif;font-size:28px;color:#f0e4ec;letter-spacing:-0.5px}
+  .header{text-align:center;margin-bottom:32px}
+  .header-emoji{font-size:48px;margin-bottom:8px}
+  .header-sub{color:#c48fa8;margin:6px 0 0;font-size:13px}
+  .header-tag{display:inline-block;background:#4a1030;border:1px solid #8b3060;border-radius:20px;padding:4px 14px;font-size:12px;color:#e8a0c0;margin-top:8px;letter-spacing:0.5px}
+  .menu-grid{display:grid;grid-template-columns:1fr;gap:14px;width:100%;max-width:440px}
+  .menu-card{background:#2a0e1c;border:1.5px solid #4a1a30;border-radius:16px;padding:22px 20px;cursor:pointer;text-align:left;color:inherit;transition:border-color 0.2s,transform 0.1s;display:flex;align-items:center;gap:18px}
+  .menu-card:hover{border-color:#c2185b;transform:translateY(-2px)}
+  .menu-emoji{font-size:36px;flex-shrink:0}
+  .menu-title{font-size:17px;font-weight:700;color:#f48fb1;margin-bottom:3px}
+  .menu-desc{font-size:12px;color:#9a6070;line-height:1.5;font-style:italic}
+  .game-wrap{width:100%;max-width:540px;display:flex;flex-direction:column;align-items:center;gap:16px}
+  .progress-bar{width:100%;height:5px;background:#3a1020;border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,#c2185b,#f48fb1);border-radius:3px;transition:width 0.4s}
+  .score-row{display:flex;gap:10px;align-items:center;justify-content:center;width:100%}
+  .score-chip{background:#3a1020;border-radius:20px;padding:4px 12px;font-size:13px;color:#f48fb1}
+  .counter-small{color:#9a6070;font-size:12px}
+  .sentence-box{width:100%;background:#2a0e1c;border:2px solid #6a2040;border-radius:16px;padding:28px 24px;text-align:center}
+  .sentence-label{font-size:11px;color:#c48fa8;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+  .sentence-text{font-size:18px;color:#f0e4ec;line-height:1.8;font-family:'Playfair Display',serif}
+  .blank{display:inline-block;border-bottom:2px solid #c2185b;min-width:130px;height:22px;vertical-align:bottom;margin:0 4px}
+  .sentence-hint{font-size:12px;color:#6a3050;margin-top:10px;font-style:italic}
+  .fill-input{width:100%;background:#2a0e1c;border:2px solid #6a2040;border-radius:12px;padding:14px 16px;color:#f0e4ec;font-size:16px;outline:none;font-family:'DM Sans',sans-serif;text-align:center}
+  .fill-input:focus{border-color:#c2185b}
+  .fill-input.ok{border-color:#66bb6a;background:#1a3a1a22}
+  .fill-input.wrong{border-color:#ef5350;background:#3a0a0a22;animation:shake 0.3s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .answer-reveal{width:100%;background:#1a3a1a;border:1.5px solid #66bb6a;border-radius:12px;padding:14px 20px;text-align:center;color:#66bb6a;font-size:15px}
+  .situations-list{width:100%;display:flex;flex-direction:column;gap:10px}
+  .situation-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+  .situation-card{background:#2a0e1c;border:1.5px solid #4a1a30;border-radius:12px;padding:14px 16px;font-size:13px;color:#e0c8d0;line-height:1.5;font-style:italic}
+  .word-select{background:#2a0e1c;border:1.5px solid #4a1a30;border-radius:12px;padding:10px 8px;color:#f48fb1;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer;min-width:155px;max-width:175px}
+  .word-select:focus{border-color:#c2185b}
+  .word-select.correct{border-color:#66bb6a!important;color:#66bb6a!important;background:#1a3a1a!important}
+  .word-select.incorrect{border-color:#ef5350!important;color:#ef5350!important;background:#3a0a0a!important}
+  .check-btn{background:linear-gradient(135deg,#c2185b,#e91e8c);border:none;border-radius:12px;padding:13px 24px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%}
+  .q-box{width:100%;background:#2a0e1c;border:2px solid #6a2040;border-radius:16px;padding:24px;text-align:center}
+  .q-lang{font-size:11px;color:#c48fa8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .q-text{font-size:20px;font-weight:700;color:#f0e4ec;line-height:1.4;font-family:'Playfair Display',serif}
+  .hint-text{margin-top:12px;font-size:13px;color:#ffb74d}
+  .type-input{width:100%;background:#2a0e1c;border:2px solid #6a2040;border-radius:12px;padding:14px 16px;color:#f0e4ec;font-size:16px;outline:none;font-family:'DM Sans',sans-serif}
+  .type-input:focus{border-color:#c2185b}
+  .type-input.ok{border-color:#66bb6a;background:#1a3a1a22}
+  .type-input.wrong{border-color:#ef5350;background:#3a0a0a22;animation:shake 0.3s}
+  .btn-row{display:flex;gap:12px;width:100%;justify-content:center}
+  .btn-primary{background:linear-gradient(135deg,#c2185b,#e91e8c);border:none;border-radius:12px;padding:14px 28px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .btn-primary:hover{opacity:0.9}
+  .btn-hint{background:#3a1020;border:1.5px solid #6a2040;border-radius:12px;padding:12px 20px;color:#ffb74d;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .btn-skip{background:#3a1020;border:1.5px solid #6a2040;border-radius:12px;padding:12px 20px;color:#9a6070;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .btn-back{background:transparent;border:none;color:#6a3050;font-size:13px;cursor:pointer;margin-top:4px;font-family:'DM Sans',sans-serif}
+  .btn-back:hover{color:#c48fa8}
+  .result-box{background:#2a0e1c;border:2px solid #6a2040;border-radius:20px;padding:40px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:380px;margin-top:20px}
+  .result-emoji{font-size:56px}
+  .result-title{font-size:28px;font-weight:700;color:#f0e4ec;font-family:'Playfair Display',serif}
+  .result-pct{font-size:16px;color:#c48fa8}
+  .rose-divider{width:100%;text-align:center;color:#4a1a30;font-size:18px;letter-spacing:6px;margin:4px 0}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div id="menu">
+  <div class="header">
+    <div class="header-emoji">🌸</div>
+    <h1>La Taxe Rose</h1>
+    <p class="header-sub">Inégalités, genre &amp; marketing · 59 expressions</p>
+    <div class="header-tag">Entraînement vocabulaire</div>
+  </div>
+  <div class="rose-divider">· · · · ·</div><br/>
+  <div class="menu-grid">
+    <button class="menu-card" onclick="startGame('fill')">
+      <div class="menu-emoji">✏️</div>
+      <div class="menu-text">
+        <div class="menu-title">Complète la phrase</div>
+        <div class="menu-desc">Une phrase avec un trou — écris le bon mot pour compléter</div>
+      </div>
+    </button>
+    <button class="menu-card" onclick="startGame('match')">
+      <div class="menu-emoji">🔗</div>
+      <div class="menu-text">
+        <div class="menu-title">Trouve le mot</div>
+        <div class="menu-desc">Lis la situation en français — retrouve l'expression qui correspond</div>
+      </div>
+    </button>
+    <button class="menu-card" onclick="startGame('type')">
+      <div class="menu-emoji">✍️</div>
+      <div class="menu-text">
+        <div class="menu-title">Traduction</div>
+        <div class="menu-desc">Lis la traduction ukrainienne — écris l'expression en français</div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<div id="game-area" class="hidden game-wrap"></div>
+
+<script>
+const VOCAB = [
+  {fr:"se manifester",ua:"проявлятися"},{fr:"rétorquer",ua:"заперечувати, відповідати"},
+  {fr:"chiffrer",ua:"підраховувати, оцінювати у цифрах"},{fr:"emboîter le pas",ua:"наслідувати, підтримувати"},
+  {fr:"avoir vent de",ua:"дізнатися про щось"},{fr:"légiférer",ua:"ухвалювати закони"},
+  {fr:"s'avérer",ua:"виявлятися"},{fr:"s'instaurer",ua:"встановлюватися"},
+  {fr:"dénoncer sur les réseaux sociaux",ua:"викривати у соцмережах"},
+  {fr:"interpeller les marques",ua:"звертатися до брендів, тиснути на бренди"},
+  {fr:"déceler",ua:"виявляти"},{fr:"facturer",ua:"виставляти рахунок"},
+  {fr:"constater",ua:"констатувати, помічати"},{fr:"cibler",ua:"націлювати"},
+  {fr:"déconstruire un stéréotype",ua:"руйнувати стереотип"},
+  {fr:"se rejeter la responsabilité",ua:"перекладати відповідальність"},
+  {fr:"être piégé",ua:"бути спійманим у пастку"},{fr:"une avancée",ua:"прогрес"},
+  {fr:"une parité",ua:"рівність (часто гендерна)"},{fr:"la sensibilisation",ua:"підвищення обізнаності"},
+  {fr:"un marqueur d'inégalités",ua:"показник нерівності"},
+  {fr:"les injonctions faites aux femmes",ua:"соціальний тиск на жінок"},
+  {fr:"les stéréotypes de genre",ua:"гендерні стереотипи"},
+  {fr:"la charge mentale",ua:"ментальне навантаження"},{fr:"les inégalités",ua:"нерівності"},
+  {fr:"un produit marketé",ua:"маркетинговий продукт"},{fr:"un produit viril",ua:"«чоловічий» продукт"},
+  {fr:"le marketing ultra-genré",ua:"сильно гендеризований маркетинг"},
+  {fr:"les produits destinés aux femmes",ua:"продукти для жінок"},
+  {fr:"la taxe rose",ua:"рожевий податок"},{fr:"un écart de prix",ua:"різниця в ціні"},
+  {fr:"le fautif principal",ua:"головний винуватець"},{fr:"une pépite",ua:"перлина, маленьке досягнення"},
+  {fr:"un biais",ua:"упередження"},{fr:"un stéréotype",ua:"стереотип"},
+  {fr:"redoutable",ua:"серйозний, грізний"},{fr:"concluant",ua:"переконливий"},
+  {fr:"flagrant",ua:"очевидний"},{fr:"mixte",ua:"змішаний"},{fr:"précaire",ua:"нестабільний"},
+  {fr:"on n'est pas sans savoir que",ua:"не можна сказати, що ми не знаємо, що"},
+  {fr:"perdant-perdant",ua:"програють усі"},{fr:"se faire avoir",ua:"бути обдуреним"},
+  {fr:"on est mis dans des cases",ua:"нас загоняють у рамки"},
+  {fr:"de moins en moins présent",ua:"дедалі менш присутній"},
+  {fr:"ça avance dans le bon sens",ua:"рухається у правильному напрямку"},
+  {fr:"pépite par pépite",ua:"крок за кроком"},
+  {fr:"on est tous biaisés",ua:"ми всі маємо упередження"},
+  {fr:"c'est du pipeau",ua:"це нісенітниця"},{fr:"victime des stéréotypes",ua:"жертва стереотипів"},
+  {fr:"préjudiciable pour les deux genres",ua:"шкідливо для обох статей"},
+  {fr:"en période de crise les inégalités se creusent",ua:"під час кризи нерівність зростає"},
+  {fr:"on nous facture plus cher",ua:"нам виставляють більшу ціну"},
+  {fr:"c'est dégueulasse",ua:"це огидно, несправедливо"},{fr:"être dû à",ua:"бути спричиненим"},
+  {fr:"on ne peut pas y échapper",ua:"цього неможливо уникнути"},
+  {fr:"être solidaire des femmes",ua:"підтримувати жінок"},
+  {fr:"non genré",ua:"гендерно нейтральний"},{fr:"c'est du vent",ua:"це пусті слова"},
+  {fr:"ce n'est pas si évident que ça",ua:"це не так очевидно"},
+];
+
+const FILL_SENTENCES = [
+  {sentence:"Le rasoir rose coûte 4€ de plus que le rasoir bleu identique — c'est ___ qui pèse sur le budget des femmes.", answer:"la taxe rose"},
+  {sentence:"Les chercheurs ont réussi à ___ un écart de prix flagrant entre les produits pour hommes et pour femmes.", answer:"déceler"},
+  {sentence:"L'association a décidé d'___ sur leurs pratiques tarifaires discriminatoires.", answer:"interpeller les marques"},
+  {sentence:"Ce gel douche noir avec des flammes est clairement ___ : emballage agressif, parfum boisé.", answer:"un produit viril"},
+  {sentence:"La situation est grave : beaucoup de femmes ont un emploi ___ avec des contrats courts.", answer:"précaire"},
+  {sentence:"Beaucoup de militants ont commencé à ___ les pratiques injustes des grandes enseignes.", answer:"dénoncer sur les réseaux sociaux"},
+  {sentence:"Les résultats de l'étude sont ___ : les femmes gagnent en moyenne 20% de moins.", answer:"concluants"},
+  {sentence:"Les stéréotypes de genre, c'est ___ : tout le monde y perd, hommes comme femmes.", answer:"perdant-perdant"},
+  {sentence:"Les publicités continuent de ___ les femmes avec des produits ménagers, jamais les hommes.", answer:"cibler"},
+  {sentence:"Le gouvernement doit ___ pour interdire la discrimination tarifaire fondée sur le genre.", answer:"légiférer"},
+  {sentence:"Il est temps de ___ : l'idée que les femmes dépensent plus par choix est fausse.", answer:"déconstruire un stéréotype"},
+  {sentence:"La journaliste a ___ le coût réel de la taxe rose en analysant 500 produits.", answer:"chiffré"},
+  {sentence:"L'ONG a ___ que les femmes paient en moyenne 1 300 € de plus par an.", answer:"constaté"},
+  {sentence:"Ce mouvement féministe a vite fait de ___ d'autres associations qui ont rejoint la lutte.", answer:"emboîter le pas"},
+  {sentence:"La discrimination de genre ___ surtout dans les rayons beauté et hygiène.", answer:"se manifeste"},
+  {sentence:"Les marques ___ les femmes plus cher en leur faisant croire que les produits roses sont de meilleure qualité.", answer:"facturent"},
+  {sentence:"___ : les inégalités de genre existent depuis longtemps et persistent malgré les lois.", answer:"on n'est pas sans savoir que"},
+  {sentence:"Avec ce marketing genré, tout le monde finit par être ___ dans des stéréotypes.", answer:"piégé"},
+  {sentence:"La ___ des consommateurs sur la taxe rose a progressé grâce aux campagnes en ligne.", answer:"sensibilisation"},
+  {sentence:"L'écart salarial est un ___ : là où il est fort, les autres inégalités le sont aussi.", answer:"marqueur d'inégalités"},
+  {sentence:"Les marques se ___ en disant que c'est le marché qui fixe les prix, pas elles.", answer:"rejettent la responsabilité"},
+  {sentence:"Une ___ : certaines marques ont volontairement aligné leurs prix entre les gammes homme et femme.", answer:"une pépite"},
+  {sentence:"Des marques proposent désormais des produits ___ : même emballage, même prix pour tous.", answer:"non genrés"},
+  {sentence:"La ministre a ___ qu'il fallait agir vite face à la montée des inégalités.", answer:"rétorqué"},
+  {sentence:"Des progrès existent, ___ : les mentalités évoluent lentement mais sûrement.", answer:"pépite par pépite"},
+  {sentence:"En achetant ce produit rose identique mais plus cher, tu risques de ___.", answer:"te faire avoir"},
+  {sentence:"___ : tout le monde a des préjugés, même ceux qui luttent contre les stéréotypes.", answer:"on est tous biaisés"},
+  {sentence:"Les inégalités de revenus sont ___ plusieurs facteurs : éducation, secteur, discrimination directe.", answer:"dues à"},
+  {sentence:"Cette pratique est ___ : elle enferme autant les hommes que les femmes dans des cases.", answer:"préjudiciable pour les deux genres"},
+  {sentence:"Une nouvelle réglementation commence à ___ dans certains pays européens contre la taxe rose.", answer:"s'instaurer"},
+  {sentence:"Il y a ___ dans l'espace public : les femmes sont moins représentées dans les médias.", answer:"de moins en moins présent"},
+  {sentence:"Certains disent que les lois vont tout changer, mais ___ — rien n'a bougé en dix ans.", answer:"c'est du vent"},
+  {sentence:"Les études montrent une ___ : pour la première fois, l'écart salarial a diminué.", answer:"une avancée"},
+  {sentence:"La situation des femmes au travail est ___ par la précarité des contrats.", answer:"due à"},
+  {sentence:"___ : les consommatrices paient systématiquement plus cher pour des produits identiques.", answer:"on nous facture plus cher"},
+];
+
+const SITUATIONS = [
+  {situation:"Une femme remarque que son rasoir rose coûte 4€ de plus que le rasoir bleu identique à côté. Elle ne comprend pas pourquoi.", word:"la taxe rose"},
+  {situation:"Un journaliste compare 200 produits et publie un tableau montrant que les articles pour femmes coûtent systématiquement plus cher.", word:"un écart de prix"},
+  {situation:"Des militantes tweetent des photos de rayons de supermarché pour montrer les prix injustes des marques.", word:"dénoncer sur les réseaux sociaux"},
+  {situation:"Une ONG écrit des lettres ouvertes à L'Oréal et Gillette pour leur demander d'expliquer leurs tarifs.", word:"interpeller les marques"},
+  {situation:"Un gel douche est vendu dans un emballage noir avec des flammes et s'appelle « Power Max ».", word:"un produit viril"},
+  {situation:"Une publicité montre toujours les femmes qui nettoient, cuisinent et s'occupent des enfants — jamais les hommes.", word:"les injonctions faites aux femmes"},
+  {situation:"Une mère pense à tout : rendez-vous médicaux, courses, anniversaires, réunions scolaires. Son mari, lui, ne pense à rien.", word:"la charge mentale"},
+  {situation:"Le Parlement discute d'une nouvelle loi pour interdire la discrimination tarifaire entre hommes et femmes.", word:"légiférer"},
+  {situation:"Une étude prouve avec des chiffres précis que les femmes paient 1 300€ de plus par an à cause du marketing genré.", word:"chiffrer"},
+  {situation:"La marque dit que c'est la faute du marché. Le distributeur dit que c'est la faute de la marque. Personne ne prend ses responsabilités.", word:"se rejeter la responsabilité"},
+  {situation:"Une chercheuse remarque qu'il y a moins de femmes dans les postes de direction depuis la crise économique.", word:"en période de crise les inégalités se creusent"},
+  {situation:"Une entreprise lance une gamme de shampoings sans couleur rose ou bleue, au même prix pour tout le monde.", word:"non genré"},
+  {situation:"Un groupe d'associations féministes rejoignent un mouvement déjà lancé par d'autres.", word:"emboîter le pas"},
+  {situation:"Une femme travaille avec des contrats de trois mois renouvelables depuis cinq ans, sans jamais être embauchée.", word:"précaire"},
+  {situation:"Un militant explique que les stéréotypes font du mal aux hommes aussi : ils ne peuvent pas montrer leurs émotions.", word:"préjudiciable pour les deux genres"},
+  {situation:"Un politicien promet de lutter contre les inégalités depuis des années, mais aucune mesure concrète n'a été prise.", word:"c'est du vent"},
+  {situation:"Une entreprise affiche des valeurs d'égalité sur son site, mais ses prix genrés n'ont pas changé d'un centime.", word:"c'est du pipeau"},
+  {situation:"Une consommatrice achète un produit rose en croyant qu'il est spécial, alors qu'il est identique au produit bleu moins cher.", word:"se faire avoir"},
+  {situation:"Une marque fait de la pub ciblée pour les crèmes anti-rides uniquement vers les femmes de plus de 40 ans.", word:"cibler"},
+  {situation:"Un homme explique à sa femme que les inégalités de salaire n'existent plus vraiment en 2024.", word:"déconstruire un stéréotype"},
+  {situation:"Une journaliste publie une enquête qui prouve, chiffres à l'appui, que les femmes sont systématiquement plus taxées.", word:"concluant"},
+  {situation:"Les inégalités de genre apparaissent dans les salaires, les retraites, le temps de travail et les prix des produits.", word:"un marqueur d'inégalités"},
+  {situation:"Pour la première fois, une grande enseigne annonce avoir aligné les prix de ses produits homme et femme.", word:"une avancée"},
+  {situation:"Tout le monde, même les défenseurs de l'égalité, a tendance à juger différemment selon le genre de la personne.", word:"on est tous biaisés"},
+  {situation:"Les inégalités entre hommes et femmes au travail sont visibles, documentées et difficiles à nier.", word:"flagrant"},
+];
+
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+
+const menu=document.getElementById('menu');
+const area=document.getElementById('game-area');
+function showMenu(){menu.classList.remove('hidden');area.classList.add('hidden');area.innerHTML='';}
+function showGame(html){menu.classList.add('hidden');area.classList.remove('hidden');area.innerHTML=html;}
+function startGame(t){if(t==='fill')fillGame();if(t==='match')matchGame();if(t==='type')typeGame();}
+
+// ── COMPLÈTE LA PHRASE ───────────────────────────────────────────────────────
+function fillGame(){
+  const questions=shuffle(FILL_SENTENCES);
+  let idx=0,score=0,revealed=false;
+
+  function render(){
+    if(idx>=questions.length){
+      const pct=Math.round((score/questions.length)*100);
+      showGame(`<div class="result-box">
+        <div class="result-emoji">${pct>=80?'🏆':pct>=50?'👍':'💪'}</div>
+        <div class="result-title">${score} / ${questions.length}</div>
+        <div class="result-pct">${pct}% de bonnes réponses</div>
+        <button class="btn-primary" onclick="showMenu()">← Menu</button>
+      </div>`);return;
+    }
+    const q=questions[idx];
+    const display=q.sentence.replace('___','<span class="blank"></span>');
+    showGame(`
+      <div class="progress-bar"><div class="progress-fill" style="width:${(idx/questions.length)*100}%"></div></div>
+      <div class="score-row">
+        <span class="score-chip">⭐ ${score}</span>
+        <span class="counter-small">${idx+1} / ${questions.length}</span>
+      </div>
+      <div class="sentence-box">
+        <div class="sentence-label">✏️ Complète la phrase</div>
+        <div class="sentence-text">${display}</div>
+        <div class="sentence-hint">Écris l'expression manquante</div>
+      </div>
+      <input class="fill-input" id="fi" placeholder="Ton expression…" autofocus onkeydown="if(event.key==='Enter')checkFill()"/>
+      <div id="hint-letters" class="hidden" style="width:100%;text-align:center;font-size:14px;color:#ffb74d;letter-spacing:3px;font-family:'DM Sans',sans-serif;padding:6px 0"></div>
+      <div id="reveal-box" class="hidden answer-reveal"></div>
+      <div class="btn-row">
+        <button class="btn-hint" id="hint-btn" onclick="showHint()">💡 Indice</button>
+        <button class="btn-skip" onclick="skipFill()">Voir la réponse</button>
+        <button class="btn-primary" id="fi-btn" onclick="checkFill()">Vérifier →</button>
+      </div>
+      <button class="btn-back" onclick="showMenu()">← Menu</button>
+    `);
+    window._fAnswer=q.answer; revealed=false; window._hintLevel=0;
+    setTimeout(()=>{const el=document.getElementById('fi');if(el)el.focus();},50);
+  }
+
+  window.showHint=function(){
+    const answer=window._fAnswer;
+    const level=window._hintLevel;
+    const words=answer.split(' ');
+    let hint;
+    if(level===0){
+      // first letters of each word: p… r…
+      hint=words.map(w=>w[0].toUpperCase()+'…').join(' ');
+    } else if(level===1){
+      // first 2 letters of each word
+      hint=words.map(w=>(w.slice(0,2)+'…')).join(' ');
+    } else {
+      // first 3 letters
+      hint=words.map(w=>(w.slice(0,3)+'…')).join(' ');
+    }
+    const box=document.getElementById('hint-letters');
+    if(box){box.classList.remove('hidden');box.textContent='💡 '+hint;}
+    window._hintLevel=Math.min(level+1,2);
+    const btn=document.getElementById('hint-btn');
+    if(btn&&window._hintLevel>=2) btn.disabled=true;
+  };
+
+  window.checkFill=function(){
+    if(revealed){idx++;render();return;}
+    const inp=document.getElementById('fi');if(!inp)return;
+    const val=inp.value.trim().toLowerCase();
+    const correct=window._fAnswer.toLowerCase();
+    const stripped=correct.replace(/^(un|une|le|la|les|l'|se |s')\s*/,'');
+    if(val===correct||val===stripped||val===correct.replace(/^(un|une|le|la|les)\s/,'')){
+      inp.classList.add('ok');score++;revealed=true;
+      document.getElementById('fi-btn').textContent='Suivant →';
+    } else {
+      inp.classList.add('wrong');
+      setTimeout(()=>inp.classList.remove('wrong'),400);
+      inp.dataset.tries=(parseInt(inp.dataset.tries||0)+1).toString();
+      if(parseInt(inp.dataset.tries)>=2){
+        const box=document.getElementById('reveal-box');
+        box.classList.remove('hidden');box.textContent='✓ Réponse : '+window._fAnswer;
+        revealed=true;document.getElementById('fi-btn').textContent='Suivant →';
+      }
+    }
+  };
+  window.skipFill=function(){
+    const box=document.getElementById('reveal-box');
+    if(box){box.classList.remove('hidden');box.textContent='✓ Réponse : '+window._fAnswer;}
+    revealed=true;const btn=document.getElementById('fi-btn');if(btn)btn.textContent='Suivant →';
+  };
+  render();
+}
+
+// ── TROUVE LE MOT ─────────────────────────────────────────────────────────────
+function matchGame(){
+  const rounds=shuffle(SITUATIONS);
+  const BATCH=5;
+  let batchIdx=0,totalScore=0;
+
+  function renderBatch(){
+    const batch=rounds.slice(batchIdx,batchIdx+BATCH);
+    if(batch.length===0){
+      const pct=Math.round((totalScore/rounds.length)*100);
+      showGame(`<div class="result-box">
+        <div class="result-emoji">${pct>=80?'🏆':pct>=50?'👍':'💪'}</div>
+        <div class="result-title">${totalScore} / ${rounds.length}</div>
+        <div class="result-pct">${pct}% de bonnes réponses</div>
+        <button class="btn-primary" onclick="showMenu()">← Menu</button>
+      </div>`);return;
+    }
+    const correctWords=batch.map(b=>b.word);
+    const distractors=shuffle(SITUATIONS.filter(s=>!correctWords.includes(s.word)).map(s=>s.word)).slice(0,6);
+    const allWords=shuffle([...new Set([...correctWords,...distractors])]);
+    const rows=batch.map((b,i)=>`
+      <div class="situation-row" id="row${i}">
+        <div class="situation-card">${b.situation}</div>
+        <select class="word-select" id="sel${i}">
+          <option value="">— choisir —</option>
+          ${allWords.map(w=>`<option value="${w.replace(/"/g,'&quot;')}">${w}</option>`).join('')}
+        </select>
+      </div>`).join('');
+    showGame(`
+      <div class="progress-bar"><div class="progress-fill" style="width:${(batchIdx/rounds.length)*100}%"></div></div>
+      <div class="score-row">
+        <span class="score-chip">⭐ ${totalScore}</span>
+        <span class="counter-small">${batchIdx+1}–${Math.min(batchIdx+BATCH,rounds.length)} / ${rounds.length}</span>
+      </div>
+      <div style="width:100%;font-size:12px;color:#c48fa8;text-align:center;font-style:italic;margin-bottom:2px">
+        🔗 Associe chaque situation à l'expression correcte
+      </div>
+      <div class="situations-list">${rows}</div>
+      <button class="check-btn" id="check-btn" onclick="checkBatch()">Vérifier ✓</button>
+      <button class="btn-back" onclick="showMenu()">← Menu</button>
+    `);
+    window._batch=batch;window._batchChecked=false;
+  }
+
+  window.checkBatch=function(){
+    if(window._batchChecked)return;
+    window._batchChecked=true;
+    let batchScore=0;
+    window._batch.forEach((b,i)=>{
+      const sel=document.getElementById('sel'+i);if(!sel)return;
+      if(sel.value===b.word){sel.classList.add('correct');batchScore++;totalScore++;}
+      else{
+        sel.classList.add('incorrect');
+        // inject correct answer
+        let found=false;
+        for(let o of sel.options){if(o.value===b.word){o.selected=true;found=true;break;}}
+        if(!found){const opt=document.createElement('option');opt.value=b.word;opt.textContent='✓ '+b.word;opt.selected=true;sel.appendChild(opt);}
+      }
+      sel.disabled=true;
+    });
+    const btn=document.getElementById('check-btn');
+    if(btn){btn.textContent=`${batchScore}/${window._batch.length} correct${batchScore!==1?'s':''} — Continuer →`;btn.onclick=()=>{batchIdx+=BATCH;renderBatch();};}
+  };
+  renderBatch();
+}
+
+// ── TRADUCTION ────────────────────────────────────────────────────────────────
+function typeGame(){
+  const questions=shuffle(VOCAB);
+  let idx=0,score=0,revealed=false;
+
+  function render(){
+    if(idx>=questions.length){
+      const pct=Math.round((score/questions.length)*100);
+      showGame(`<div class="result-box">
+        <div class="result-emoji">✍️</div>
+        <div class="result-title">${score} / ${questions.length}</div>
+        <div class="result-pct">${pct}% de bonnes réponses</div>
+        <button class="btn-primary" onclick="showMenu()">← Menu</button>
+      </div>`);return;
+    }
+    const q=questions[idx];
+    showGame(`
+      <div class="progress-bar"><div class="progress-fill" style="width:${(idx/questions.length)*100}%"></div></div>
+      <div class="score-row">
+        <span class="score-chip">⭐ ${score}</span>
+        <span class="counter-small">${idx+1}/${questions.length}</span>
+      </div>
+      <div class="q-box">
+        <div class="q-lang">🇺🇦 Traduis en français</div>
+        <div class="q-text">${q.ua}</div>
+        <div class="hint-text hidden" id="hint-box">💡 Début : <b>${q.fr.slice(0,3)}…</b></div>
+      </div>
+      <input class="type-input" id="ti" placeholder="Écris l'expression en français…" autofocus onkeydown="if(event.key==='Enter')checkType()"/>
+      <div id="reveal-box2" class="hidden answer-reveal"></div>
+      <div class="btn-row">
+        <button class="btn-hint" onclick="document.getElementById('hint-box').classList.remove('hidden')">💡 Indice</button>
+        <button class="btn-primary" id="ti-btn" onclick="checkType()">Vérifier →</button>
+      </div>
+      <button class="btn-back" onclick="showMenu()">← Menu</button>
+    `);
+    window._tAnswer=q.fr;revealed=false;
+    setTimeout(()=>{const el=document.getElementById('ti');if(el)el.focus();},50);
+  }
+
+  window.checkType=function(){
+    if(revealed){idx++;render();return;}
+    const inp=document.getElementById('ti');if(!inp)return;
+    const val=inp.value.trim().toLowerCase();
+    const correct=window._tAnswer.toLowerCase();
+    if(val===correct){
+      inp.classList.add('ok');score++;revealed=true;
+      document.getElementById('ti-btn').textContent='Suivant →';
+    } else {
+      inp.classList.add('wrong');
+      setTimeout(()=>inp.classList.remove('wrong'),400);
+      inp.dataset.tries=(parseInt(inp.dataset.tries||0)+1).toString();
+      if(parseInt(inp.dataset.tries)>=2){
+        const box=document.getElementById('reveal-box2');
+        box.classList.remove('hidden');box.textContent='✓ Réponse : '+window._tAnswer;
+        revealed=true;document.getElementById('ti-btn').textContent='Suivant →';
+      }
+    }
+  };
+  render();
+}
+</script>
+</body>
+</html>
