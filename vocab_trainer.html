@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulaire 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#fdf6f0; --rose:#f7a8c4; --rose2:#f2c4d8;
+  --lilac:#c9b8e8; --lilac2:#ede8f8; --mint:#a8d8c8;
+  --peach:#fbc49a; --yellow:#fde68a;
+  --text:#3d2c3e; --muted:#9b8aa0; --white:#fff;
+  --shadow:0 8px 32px rgba(180,120,160,.13);
+  --green:#6dbf9e; --red:#f08090;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);min-height:100vh;font-family:'Nunito',sans-serif;color:var(--text);overflow-x:hidden;}
+body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
+body::before{width:500px;height:500px;top:-150px;right:-150px;background:radial-gradient(circle,rgba(201,184,232,.3) 0%,transparent 70%);}
+body::after{width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(247,168,196,.22) 0%,transparent 70%);}
+
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:36px 20px 80px;}
+
+header{text-align:center;margin-bottom:30px;}
+.deco-title{display:inline-flex;align-items:center;gap:10px;font-family:'Lora',serif;font-size:clamp(24px,5vw,38px);font-weight:600;color:var(--text);}
+.flower{font-size:26px;animation:spin 6s linear infinite;}
+.flower:last-child{animation-direction:reverse;}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.subtitle{color:var(--muted);font-size:13px;margin-top:5px;letter-spacing:.04em;}
+
+/* MODE PILLS */
+.mode-row{display:flex;gap:7px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;}
+.mode-pill{background:var(--white);border:2px solid transparent;color:var(--muted);padding:7px 15px;border-radius:999px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(180,120,160,.1);}
+.mode-pill:hover{color:var(--text);}
+.mode-pill.on{background:var(--lilac2);border-color:var(--lilac);color:#5a4a7a;}
+
+/* PROGRESS */
+.prog-wrap{margin-bottom:20px;}
+.prog-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:5px;}
+.prog-bar{height:8px;background:#ede0f0;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--lilac));border-radius:99px;transition:width .6s cubic-bezier(.34,1.56,.64,1);}
+
+/* SCORE ROW */
+.score-row{display:flex;gap:10px;justify-content:center;margin-bottom:22px;}
+.sc-pill{background:var(--white);border-radius:12px;padding:7px 14px;text-align:center;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;box-shadow:0 2px 10px rgba(180,120,160,.1);min-width:60px;}
+.sc-pill strong{display:block;font-size:22px;line-height:1.1;}
+.sc-pill.g strong{color:var(--green);}.sc-pill.r strong{color:var(--red);}
+.streak-pill{background:linear-gradient(135deg,#fde68a,#fbc49a);border-radius:12px;padding:7px 14px;font-size:13px;font-weight:800;color:#a0600a;box-shadow:0 2px 10px rgba(251,196,154,.3);align-self:center;opacity:0;transition:opacity .3s;}
+.streak-pill.show{opacity:1;}
+
+/* CARD BASE */
+.card{background:var(--white);border-radius:24px;padding:28px 28px 22px;box-shadow:var(--shadow);border:2px solid var(--rose2);margin-bottom:18px;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+
+.cat-badge{display:inline-block;background:var(--lilac2);color:#5a4a7a;font-size:10px;font-weight:800;padding:3px 10px;border-radius:99px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;}
+
+/* ── FLASHCARD ── */
+.flashcard-scene{perspective:1200px;margin-bottom:20px;cursor:pointer;}
+.flashcard{width:100%;min-height:185px;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);border-radius:24px;}
+.flashcard.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;box-shadow:var(--shadow);}
+.fc-front{background:linear-gradient(135deg,#ffeef5 0%,#f3e8ff 100%);border:2px solid var(--rose2);}
+.fc-back{background:linear-gradient(135deg,#e8f8f2 0%,#eef6ff 100%);border:2px solid var(--mint);transform:rotateY(180deg);}
+.fc-tag{position:absolute;top:12px;left:16px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);opacity:.7;}
+.fc-flip-hint{position:absolute;bottom:12px;right:16px;font-size:11px;color:var(--muted);opacity:.5;font-weight:600;}
+.fc-emoji{font-size:30px;margin-bottom:10px;}
+.fc-fr{font-family:'Lora',serif;font-size:clamp(16px,3vw,22px);font-style:italic;color:var(--text);text-align:center;line-height:1.5;margin-bottom:4px;}
+.fc-uk{font-size:clamp(14px,2.5vw,18px);color:#5a4a7a;font-weight:700;text-align:center;line-height:1.4;}
+
+/* ── DESCRIPTION (опис→слово) ── */
+.desc-box{background:linear-gradient(135deg,#ffeef5,#f3e8ff);border:2px solid var(--rose2);border-radius:16px;padding:20px 22px;margin-bottom:18px;}
+.desc-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;}
+.desc-text{font-family:'Lora',serif;font-size:clamp(15px,2.5vw,19px);font-style:italic;color:var(--text);line-height:1.6;}
+
+/* ── FILL-IN-BLANK ── */
+.sentence-box{font-family:'Lora',serif;font-size:clamp(16px,2.8vw,21px);color:var(--text);line-height:1.7;margin-bottom:6px;}
+.blank-word{display:inline-block;min-width:90px;border-bottom:2.5px solid var(--lilac);color:var(--lilac);font-weight:700;text-align:center;padding:0 4px;}
+.sentence-uk{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:20px;}
+
+/* CHOICES */
+.choices{display:flex;flex-direction:column;gap:9px;}
+.choice{background:#fdf0f8;border:2px solid #f0d8ec;border-radius:14px;padding:12px 16px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--text);cursor:pointer;transition:all .18s;text-align:left;}
+.choice:hover:not(:disabled){background:var(--lilac2);border-color:var(--lilac);transform:translateX(4px);}
+.choice.ok{background:#e6f9f2;border-color:var(--green);color:#2a7a5a;}
+.choice.err{background:#fff0f2;border-color:var(--red);color:#c0304a;}
+.choice.reveal{background:#e6f9f2;border-color:var(--green);color:#2a7a5a;}
+
+/* TYPE INPUT */
+.type-input{width:100%;background:#fdf0f8;border:2px solid #f0d8ec;border-radius:14px;color:var(--text);font-family:'Lora',serif;font-size:20px;font-style:italic;padding:13px 16px;outline:none;transition:border-color .2s;margin-bottom:11px;text-align:center;}
+.type-input:focus{border-color:var(--lilac);}
+.type-input.ok{border-color:var(--green);background:#e6f9f2;color:#2a7a5a;}
+.type-input.err{border-color:var(--red);background:#fff0f2;color:#c0304a;}
+
+.check-btn{width:100%;background:linear-gradient(135deg,var(--rose),var(--lilac));border:none;color:var(--white);padding:13px 20px;border-radius:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(200,140,180,.3);}
+.check-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,140,180,.4);}
+
+/* FEEDBACK */
+.feedback{border-radius:14px;padding:11px 16px;font-size:14px;font-weight:700;display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;opacity:0;transition:opacity .3s;min-height:44px;}
+.feedback.show{opacity:1;}
+.feedback.ok{background:#e6f9f2;color:#2a7a5a;}
+.feedback.err{background:#fff0f2;color:#c0304a;}
+.feedback .ico{font-size:18px;flex-shrink:0;}
+.feedback .msg{line-height:1.5;}
+.feedback .msg em{font-style:italic;font-family:'Lora',serif;}
+
+/* BOTTOM */
+.bottom-row{display:flex;gap:10px;justify-content:flex-end;margin-top:2px;}
+.ghost-btn{background:var(--white);border:2px solid #eeddf5;color:var(--muted);padding:8px 16px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.ghost-btn:hover{border-color:var(--lilac);color:var(--text);}
+.next-btn{background:linear-gradient(135deg,var(--rose),var(--lilac));border:none;color:var(--white);padding:8px 20px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;display:none;box-shadow:0 4px 14px rgba(200,140,180,.3);}
+.next-btn.show{display:block;}
+.next-btn:hover{transform:translateY(-1px);}
+
+/* RESULT */
+.result{background:var(--white);border-radius:24px;padding:44px 28px;text-align:center;box-shadow:var(--shadow);border:2px solid var(--rose2);}
+.result .big{font-size:68px;margin-bottom:12px;}
+.result h2{font-family:'Lora',serif;font-size:26px;font-style:italic;color:var(--text);margin-bottom:8px;}
+.result .pts{font-size:50px;font-weight:800;background:linear-gradient(135deg,var(--rose),var(--lilac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0 4px;}
+.result .sub{color:var(--muted);font-size:14px;margin-bottom:26px;}
+.result .restart{background:linear-gradient(135deg,var(--rose),var(--lilac));border:none;color:var(--white);padding:12px 30px;border-radius:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(200,140,180,.3);}
+.result .restart:hover{transform:translateY(-2px);}
+
+@media(max-width:480px){
+  .card,.fc-face{padding:20px 16px 16px;}
+  .desc-box{padding:16px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="deco-title">
+      <span class="flower">🌸</span>Vocabulaire<span class="flower">🌸</span>
+    </div>
+    <p class="subtitle">Lexique français — entraînement</p>
+  </header>
+
+  <div class="mode-row">
+    <button class="mode-pill on"  onclick="setMode('desc_choice')">🔍 Description → mot</button>
+    <button class="mode-pill"     onclick="setMode('fill_choice')">📝 Compléter</button>
+    <button class="mode-pill"     onclick="setMode('type')">✍️ Traduction</button>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-top">
+      <span id="prog-label">0 / 0</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="score-row">
+    <div class="sc-pill g"><strong id="sc-ok">0</strong>correct</div>
+    <div class="sc-pill r"><strong id="sc-err">0</strong>erreurs</div>
+    <div class="streak-pill" id="streak-pill">🔥 0</div>
+  </div>
+
+  <div id="stage"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const WORDS = [
+  {
+    fr:'se regarder comme chien et chat',
+    uk:'жити як кіт із собакою',
+    cat:'expression',
+    desc:'Expression qui décrit une relation pleine de conflits et d\'hostilité entre deux personnes.',
+    fill:'Elles ne s\'entendent vraiment pas — elles ___ comme chien et chat.',
+    fill_before:'se regardent',
+  },
+  {
+    fr:'une faillotte',
+    uk:'слабачка, невдаха',
+    cat:'nom',
+    desc:'Mot familier pour désigner une personne qui manque de caractère, qui est faible ou incapable.',
+    fill:'Ne sois pas une ___ ! Tu peux y arriver.',
+    fill_before:'faillotte',
+  },
+  {
+    fr:'une frangine / un frangin',
+    uk:'сестра / брат (розм.)',
+    cat:'nom',
+    desc:'Terme familier pour désigner un frère ou une sœur dans la langue parlée.',
+    fill:'C\'est ma ___, on se connaît depuis toujours.',
+    fill_before:'frangine',
+  },
+  {
+    fr:'insulter',
+    uk:'ображати',
+    cat:'verbe',
+    desc:'Verbe qui signifie dire des choses blessantes à quelqu\'un pour lui manquer de respect.',
+    fill:'Il a commencé à ___ ses camarades sans aucune raison.',
+    fill_before:'insulter',
+  },
+  {
+    fr:'crêper le chignon',
+    uk:'сваритися',
+    cat:'expression',
+    desc:'Expression imagée qui décrit une dispute violente, souvent entre femmes selon les stéréotypes.',
+    fill:'Les deux voisines ont fini par ___ le chignon devant tout le monde.',
+    fill_before:'se crêper',
+  },
+  {
+    fr:'un carnet intime',
+    uk:'особистий щоденник',
+    cat:'nom',
+    desc:'Cahier personnel où on écrit ses pensées, ses émotions et ses secrets.',
+    fill:'Elle garde son ___ sous le matelas pour que personne ne le lise.',
+    fill_before:'carnet intime',
+  },
+  {
+    fr:'un repli',
+    uk:'відступ, замкнутість у собі',
+    cat:'nom',
+    desc:'État de retrait intérieur, quand une personne s\'isole émotionnellement des autres.',
+    fill:'Après cet événement douloureux, il est entré dans un ___ sur lui-même.',
+    fill_before:'repli',
+  },
+  {
+    fr:'une bande de filles',
+    uk:'компанія дівчат',
+    cat:'expression',
+    desc:'Groupe de filles qui se fréquentent régulièrement et partagent des activités.',
+    fill:'Elle a rejoint une ___ très soudée au lycée.',
+    fill_before:'bande de filles',
+  },
+  {
+    fr:'une mise en concurrence',
+    uk:'поставлення в умови конкуренції',
+    cat:'nom',
+    desc:'Situation où des personnes ou des groupes sont placés en opposition pour obtenir la même chose.',
+    fill:'La ___ entre filles est souvent entretenue par les médias.',
+    fill_before:'mise en concurrence',
+  },
+  {
+    fr:'une amitié solide',
+    uk:'міцна дружба',
+    cat:'expression',
+    desc:'Lien amical profond qui résiste aux épreuves du temps et aux difficultés.',
+    fill:'Elles ont construit une ___ basée sur la confiance mutuelle.',
+    fill_before:'amitié solide',
+  },
+  {
+    fr:'le stigmate de la putain',
+    uk:'стигма «повії»',
+    cat:'nom',
+    desc:'Label social négatif imposé aux femmes jugées trop libres dans leur comportement ou sexualité.',
+    fill:'Elle a dû se battre pour se défaire du ___ que la société lui avait collé.',
+    fill_before:'stigmate',
+  },
+  {
+    fr:"l'intériorisation des normes de genre",
+    uk:'засвоєння гендерних норм',
+    cat:'nom',
+    desc:'Processus par lequel une personne absorbe inconsciemment les attentes sociales liées au genre.',
+    fill:"L'___ commence dès la petite enfance, à travers les jouets et les contes.",
+    fill_before:'intériorisation des normes de genre',
+  },
+  {
+    fr:'un moment marqué',
+    uk:'визначний момент',
+    cat:'expression',
+    desc:'Instant ou événement qui laisse une impression durable dans la mémoire.',
+    fill:'Leur première rencontre a été un ___ dans leurs deux vies.',
+    fill_before:'moment marqué',
+  },
+  {
+    fr:'se défaire du stigmate',
+    uk:'позбутися стигми',
+    cat:'verbe',
+    desc:'Expression qui signifie se libérer d\'une étiquette négative imposée par la société.',
+    fill:'Il faut du temps et du courage pour ___ que la société nous impose.',
+    fill_before:"se défaire du stigmate",
+  },
+  {
+    fr:'montrer patte blanche',
+    uk:'довести свою надійність',
+    cat:'expression',
+    desc:'Expression signifiant prouver sa bonne foi ou ses bonnes intentions pour être accepté.',
+    fill:'Pour entrer dans ce groupe, il fallait ___ en montrant ses valeurs.',
+    fill_before:'montrer patte blanche',
+  },
+  {
+    fr:'se distancier',
+    uk:'дистанціюватися',
+    cat:'verbe',
+    desc:'Verbe qui signifie prendre de la distance émotionnelle ou physique par rapport à quelqu\'un.',
+    fill:'Elle a choisi de ___ des personnes toxiques de son entourage.',
+    fill_before:'se distancier',
+  },
+  {
+    fr:'pointer du doigt',
+    uk:'вказувати пальцем (звинувачувати)',
+    cat:'expression',
+    desc:'Expression qui signifie désigner publiquement quelqu\'un comme responsable ou coupable.',
+    fill:'On n\'a pas le droit de ___ les gens sans preuve.',
+    fill_before:'pointer du doigt',
+  },
+  {
+    fr:'dénoncer',
+    uk:'викривати, засуджувати',
+    cat:'verbe',
+    desc:'Verbe qui signifie révéler publiquement une injustice ou accuser quelqu\'un de manière formelle.',
+    fill:'Ces artistes ont voulu ___ les inégalités de genre à travers leur art.',
+    fill_before:'dénoncer',
+  },
+  {
+    fr:'la sororité',
+    uk:'сестринство (солідарність між жінками)',
+    cat:'nom',
+    desc:'Concept féministe qui désigne la solidarité et l\'entraide entre femmes face aux oppressions.',
+    fill:'La ___ est un outil puissant de résistance collective.',
+    fill_before:'sororité',
+  },
+  {
+    fr:'un soutien-gorge',
+    uk:'бюстгальтер',
+    cat:'nom',
+    desc:'Sous-vêtement féminin qui soutient la poitrine, souvent symbole des injonctions faites aux femmes.',
+    fill:'Brûler son ___ était un acte symbolique du féminisme des années 70.',
+    fill_before:'soutien-gorge',
+  },
+  {
+    fr:'une injonction contradictoire imposée aux femmes',
+    uk:'суперечлива вимога, нав\'язана жінкам',
+    cat:'nom',
+    desc:'Ordre simultané d\'être à la fois séduisante et pudique, forte et douce — impossible à satisfaire.',
+    fill:'Sois belle mais pas trop : c\'est une ___ typique de notre société.',
+    fill_before:'injonction contradictoire',
+  },
+  {
+    fr:'une femme accomplie',
+    uk:'реалізована, самодостатня жінка',
+    cat:'expression',
+    desc:'Désigne une femme épanouie, qui a réalisé ses objectifs personnels et professionnels.',
+    fill:'Elle est mère, médecin et artiste : une vraie ___.',
+    fill_before:'femme accomplie',
+  },
+  {
+    fr:'culpabilisant / culpabilisante',
+    uk:'той/та, що викликає почуття провини',
+    cat:'adj',
+    desc:'Adjectif décrivant quelque chose ou quelqu\'un qui pousse les autres à se sentir coupables.',
+    fill:'Ce discours est très ___ pour les femmes qui choisissent de ne pas avoir d\'enfants.',
+    fill_before:'culpabilisant',
+  },
+  {
+    fr:'une disparité',
+    uk:'нерівність, різниця',
+    cat:'nom',
+    desc:'Écart ou différence significative entre deux groupes, souvent en termes de droits ou de revenus.',
+    fill:'La ___ salariale entre hommes et femmes persiste dans de nombreux secteurs.',
+    fill_before:'disparité',
+  },
+  {
+    fr:'un conjoint / une conjointe',
+    uk:'партнер / партнерка (у шлюбі)',
+    cat:'nom',
+    desc:'Terme officiel désignant la personne avec qui on est marié ou en union reconnue.',
+    fill:'Le formulaire demande le nom du ___ ou de la ___.',
+    fill_before:'conjoint / conjointe',
+  },
+  {
+    fr:'sous-estimer',
+    uk:'недооцінювати',
+    cat:'verbe',
+    desc:'Verbe qui signifie ne pas accorder suffisamment de valeur ou de capacité à quelqu\'un.',
+    fill:'On a longtemps tendance à ___ les compétences des femmes en sciences.',
+    fill_before:'sous-estimer',
+  },
+  {
+    fr:'alimenter',
+    uk:'підтримувати, живити, сприяти розвитку',
+    cat:'verbe',
+    desc:'Au sens figuré : entretenir, nourrir quelque chose comme un sentiment ou un phénomène social.',
+    fill:'Les réseaux sociaux peuvent ___ des stéréotypes négatifs.',
+    fill_before:'alimenter',
+  },
+  {
+    fr:"s'épanouir",
+    uk:'розквітати, розвиватися',
+    cat:'verbe',
+    desc:'Verbe qui décrit le fait de se développer pleinement, d\'être heureux et de réaliser son potentiel.',
+    fill:"Elle a enfin pu ___ dans un environnement bienveillant.",
+    fill_before:"s'épanouir",
+  },
+  {
+    fr:'regorger',
+    uk:'рясніти, переповнювати, бути багатим на щось',
+    cat:'verbe',
+    desc:'Verbe exprimant qu\'un lieu ou un texte est extrêmement riche en quelque chose.',
+    fill:'Ce roman ___ de personnages féminins complexes et attachants.',
+    fill_before:'regorge',
+  },
+  {
+    fr:'des relations tissées de confiance',
+    uk:'стосунки, побудовані на довірі',
+    cat:'expression',
+    desc:'Image poétique décrivant des liens profonds construits progressivement grâce à la confiance.',
+    fill:'Leur amitié de vingt ans est faite de ___ tissées de confiance.',
+    fill_before:'relations',
+  },
+  {
+    fr:'une complicité',
+    uk:'близькість, взаєморозуміння',
+    cat:'nom',
+    desc:'Lien de connivence entre personnes qui se comprennent sans avoir besoin de tout expliquer.',
+    fill:'Il y a une vraie ___ entre elles : un regard suffit pour se comprendre.',
+    fill_before:'complicité',
+  },
+  {
+    fr:'des piliers inébranlables',
+    uk:'непохитні опори',
+    cat:'expression',
+    desc:'Image pour décrire des personnes ou des valeurs qui restent stables quoi qu\'il arrive.',
+    fill:'Ses amies sont des ___ dans sa vie, toujours là quand ça va mal.',
+    fill_before:'piliers inébranlables',
+  },
+  {
+    fr:'une figure féminine bienveillante',
+    uk:'доброзичлива жіноча постать',
+    cat:'expression',
+    desc:'Une femme (réelle ou fictive) qui inspire, soutient et guide avec douceur et bienveillance.',
+    fill:'Sa professeure a été pour elle une ___ dont elle se souvient toujours.',
+    fill_before:'figure féminine bienveillante',
+  },
+  {
+    fr:'une force salvatrice et transformative',
+    uk:'рятівна та перетворювальна сила',
+    cat:'expression',
+    desc:'Puissance capable non seulement de sauver mais aussi de changer profondément quelqu\'un.',
+    fill:"L'amitié peut être une ___ dans les moments les plus sombres.",
+    fill_before:'force salvatrice et transformative',
+  },
+  {
+    fr:'des conversations à cœur ouvert',
+    uk:'щирі / відверті розмови',
+    cat:'expression',
+    desc:'Discussions franches et profondes où on partage ses vrais sentiments sans masque.',
+    fill:'Elles ont eu des ___ qui ont tout changé entre elles.',
+    fill_before:'conversations à cœur ouvert',
+  },
+  {
+    fr:"une empreinte indélébile",
+    uk:'незабутній слід',
+    cat:'expression',
+    desc:'Marque profonde et permanente laissée dans la mémoire ou la personnalité de quelqu\'un.',
+    fill:'Cette rencontre a laissé une ___ dans sa vie.',
+    fill_before:'empreinte indélébile',
+  },
+  {
+    fr:'une affection inconditionnelle',
+    uk:'безумовна прихильність / любов',
+    cat:'expression',
+    desc:'Amour ou attachement qui ne dépend d\'aucune condition, qui reste constant quoi qu\'il arrive.',
+    fill:'Une mère ressent souvent une ___ pour ses enfants.',
+    fill_before:'affection inconditionnelle',
+  },
+  {
+    fr:'«La Belle au bois dormant»',
+    uk:'«Спляча красуня»',
+    cat:'titre',
+    desc:'Conte de fées classique où une princesse est plongée dans un sommeil magique.',
+    fill:'___ est un conte qui reproduit des stéréotypes sur la femme passive.',
+    fill_before:'«La Belle au bois dormant»',
+  },
+  {
+    fr:'«Cendrillon»',
+    uk:'«Попелюшка»',
+    cat:'titre',
+    desc:'Conte populaire où une jeune fille maltraitée trouve le bonheur grâce à un prince.',
+    fill:'___ illustre l\'idée que le salut de la femme vient toujours d\'un homme.',
+    fill_before:'«Cendrillon»',
+  },
+  {
+    fr:'en plein essor',
+    uk:'на підйомі, активно розвивається',
+    cat:'expression',
+    desc:'Expression pour décrire quelque chose qui se développe rapidement et avec succès.',
+    fill:"Les études féministes sont en ___ dans les universités européennes.",
+    fill_before:'plein essor',
+  },
+];
+
+const CAT_EMOJI = {expression:'💬',nom:'📌',verbe:'⚡',adj:'✨',titre:'📖'};
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let mode='desc_choice', pool=[], idx=0, correct=0, wrong=0, streak=0, answered=false;
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.mode-pill').forEach((b,i)=>
+    b.classList.toggle('on',['desc_choice','fill_choice','type'][i]===m));
+  start();
+}
+
+function start(){
+  pool=shuffle([...WORDS]);
+  idx=0;correct=0;wrong=0;streak=0;answered=false;
+  updateUI();render();
+}
+
+function updateUI(){
+  document.getElementById('sc-ok').textContent=correct;
+  document.getElementById('sc-err').textContent=wrong;
+  const sp=document.getElementById('streak-pill');
+  if(streak>=2){sp.classList.add('show');sp.textContent='🔥 '+streak+' de suite';}
+  else sp.classList.remove('show');
+  const pct=pool.length?Math.round(idx/pool.length*100):0;
+  document.getElementById('prog-label').textContent=idx+' / '+pool.length;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+}
+
+// ═══════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════
+function render(){
+  if(idx>=pool.length){renderResult();return;}
+  updateUI();
+  if(mode==='desc_choice') renderDesc();
+  else if(mode==='fill_choice') renderFill();
+  else renderType();
+}
+
+// ── FLASHCARDS ────────────────────────────────────────────
+function renderFlash(){
+  const w=pool[idx];
+  document.getElementById('stage').innerHTML=`
+    <div class="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard" id="fc">
+        <div class="fc-face fc-front">
+          <div class="fc-tag">${CAT_EMOJI[w.cat]} ${w.cat}</div>
+          <div class="fc-emoji">🇫🇷</div>
+          <div class="fc-fr">${w.fr}</div>
+          <div class="fc-flip-hint">натисни щоб перевернути ↩</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-tag">🇺🇦 переклад</div>
+          <div class="fc-emoji">✨</div>
+          <div class="fc-uk">${w.uk}</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-row" style="justify-content:space-between">
+      <button class="ghost-btn" onclick="flashRate('again')">😅 Encore</button>
+      <button class="ghost-btn" onclick="flashRate('hard')">🤔 Difficile</button>
+      <button class="ghost-btn" style="background:linear-gradient(135deg,#a8d8c8,#c9e8d8);border-color:#a8d8c8;color:#2a6a5a;font-weight:800" onclick="flashRate('ok')">😊 Je sais !</button>
+    </div>`;
+}
+function flipCard(){document.getElementById('fc')?.classList.toggle('flipped');}
+function flashRate(r){
+  if(r==='ok'){correct++;streak++;}else{wrong++;streak=0;}
+  idx++;updateUI();render();
+}
+
+// ── DESCRIPTION → WORD ───────────────────────────────────
+function renderDesc(){
+  answered=false;
+  const w=pool[idx];
+  const others=shuffle(WORDS.filter(x=>x!==w)).slice(0,3);
+  const opts=shuffle([w,...others]);
+  document.getElementById('stage').innerHTML=`
+    <div class="card">
+      <div class="cat-badge">${CAT_EMOJI[w.cat]} description → mot</div>
+      <div class="desc-box">
+        <div class="desc-label">📖 Description</div>
+        <div class="desc-text">${w.desc}</div>
+      </div>
+      <div style="font-size:13px;color:var(--muted);font-weight:700;margin-bottom:12px;">Quel est ce mot ou cette expression ?</div>
+      <div class="choices" id="choices">
+        ${opts.map((o,i)=>`<button class="choice" onclick="answerChoice(${i},${opts.indexOf(w)},this)">${o.fr}</button>`).join('')}
+      </div>
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="bottom-row">
+      <button class="next-btn" id="nb" onclick="next()">Suivant →</button>
+    </div>`;
+}
+
+// ── FILL IN THE BLANK ─────────────────────────────────────
+function renderFill(){
+  answered=false;
+  const w=pool[idx];
+  const others=shuffle(WORDS.filter(x=>x!==w)).slice(0,3);
+  const opts=shuffle([w,...others]);
+
+  // build sentence with blank
+  const sentence=w.fill.replace('___',
+    `<span class="blank-word" id="bw">___</span>`);
+
+  document.getElementById('stage').innerHTML=`
+    <div class="card">
+      <div class="cat-badge">${CAT_EMOJI[w.cat]} complétez la phrase</div>
+      <div style="font-size:13px;color:var(--muted);font-weight:700;margin-bottom:10px;">Complétez avec le bon mot :</div>
+      <div class="sentence-box">${sentence}</div>
+      <div style="font-size:13px;color:var(--muted);font-style:italic;margin-bottom:18px;">🇺🇦 ${w.uk}</div>
+      <div class="choices" id="choices">
+        ${opts.map((o,i)=>`<button class="choice" onclick="answerChoice(${i},${opts.indexOf(w)},this)">${o.fr}</button>`).join('')}
+      </div>
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="bottom-row">
+      <button class="next-btn" id="nb" onclick="next()">Suivant →</button>
+    </div>`;
+}
+
+// ── SHARED CHOICE ANSWER ─────────────────────────────────
+function answerChoice(chosen, correct_i, btn){
+  if(answered)return;
+  answered=true;
+  const w=pool[idx];
+  document.querySelectorAll('.choice').forEach(b=>b.disabled=true);
+  document.querySelectorAll('.choice')[correct_i].classList.add('reveal');
+  // fill blank if fill mode
+  const bw=document.getElementById('bw');
+  if(bw)bw.textContent=w.fill_before;
+
+  const fb=document.getElementById('fb');
+  if(chosen===correct_i){
+    btn.classList.add('ok');correct++;streak++;
+    fb.className='feedback show ok';
+    fb.innerHTML=`<span class="ico">🌸</span><div class="msg">Bravo ! ${streak>=3?'🔥 Série '+streak+'!':''}</div>`;
+  } else {
+    btn.classList.add('err');wrong++;streak=0;
+    fb.className='feedback show err';
+    fb.innerHTML=`<span class="ico">💔</span><div class="msg">Pas tout à fait… La bonne réponse : <em>${w.fr}</em></div>`;
+  }
+  updateUI();
+  document.getElementById('nb').classList.add('show');
+}
+
+// ── TYPE (traduction uk→fr) ───────────────────────────────
+function renderType(){
+  answered=false;
+  const w=pool[idx];
+  document.getElementById('stage').innerHTML=`
+    <div class="card">
+      <div class="cat-badge">${CAT_EMOJI[w.cat]} traduction</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">Traduisez en français :</div>
+      <div style="font-family:'Lora',serif;font-size:clamp(18px,3vw,24px);font-weight:600;margin-bottom:18px;color:var(--text);">${w.uk}</div>
+      <input class="type-input" id="ti" type="text" placeholder="votre réponse en français…"
+        autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')checkType()">
+      <button class="check-btn" onclick="checkType()">Vérifier ✓</button>
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="bottom-row">
+      <button class="ghost-btn" onclick="skipType()">Passer</button>
+      <button class="next-btn" id="nb" onclick="next()">Suivant →</button>
+    </div>`;
+  setTimeout(()=>document.getElementById('ti')?.focus(),40);
+}
+
+function norm(s){return s.toLowerCase().replace(/[«»"''\-]/g,'').replace(/\s+/g,' ').trim();}
+function checkType(){
+  if(answered)return;
+  const w=pool[idx];
+  const inp=document.getElementById('ti');
+  const val=norm(inp.value);
+  answered=true;inp.disabled=true;
+  // flexible: any key word (>3 chars) from the French answer appears in input
+  const ansWords=norm(w.fr).split(/[\s,\/\(\)→—]+/).filter(x=>x.length>3);
+  const matched=ansWords.some(word=>val.includes(word));
+  const fb=document.getElementById('fb');
+  if(matched){
+    inp.classList.add('ok');correct++;streak++;
+    fb.className='feedback show ok';
+    fb.innerHTML=`<span class="ico">🌸</span><div class="msg">Bravo ! Réponse attendue : <em>${w.fr}</em></div>`;
+  } else {
+    inp.classList.add('err');wrong++;streak=0;
+    fb.className='feedback show err';
+    fb.innerHTML=`<span class="ico">💔</span><div class="msg">La bonne réponse : <em>${w.fr}</em></div>`;
+  }
+  updateUI();
+  document.getElementById('nb').classList.add('show');
+}
+function skipType(){
+  if(answered)return;
+  const w=pool[idx];answered=true;wrong++;streak=0;
+  const inp=document.getElementById('ti');inp.disabled=true;
+  const fb=document.getElementById('fb');
+  fb.className='feedback show err';
+  fb.innerHTML=`<span class="ico">💡</span><div class="msg">Réponse : <em>${w.fr}</em></div>`;
+  updateUI();
+  document.getElementById('nb').classList.add('show');
+}
+
+function next(){idx++;answered=false;render();}
+
+// ── RESULT ────────────────────────────────────────────────
+function renderResult(){
+  const t=pool.length,pct=Math.round(correct/(correct+wrong||1)*100);
+  const e=pct>=85?'🏆':pct>=60?'🌸':'💪';
+  const m=pct>=85?'Charmant ! Excellent !':pct>=60?'Très bien ! Bravo !':'Continue ! Encore un effort !';
+  document.getElementById('stage').innerHTML=`
+    <div class="result">
+      <div class="big">${e}</div>
+      <h2>${m}</h2>
+      <div class="pts">${correct} / ${t}</div>
+      <div class="sub">${pct}% corrects • ${t} mots</div>
+      <button class="restart" onclick="start()">Recommencer 🌸</button>
+    </div>`;
+  document.getElementById('prog-fill').style.width='100%';
+  document.getElementById('prog-label').textContent=t+' / '+t;
+  document.getElementById('prog-pct').textContent='100%';
+}
+
+start();
+</script>
+</body>
+</html>
