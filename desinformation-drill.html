@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дезінформація — Лексика FR/UK</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e0f;
+    --surface: #1a1a1c;
+    --surface2: #242426;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #f0ede8;
+    --text2: #a09d98;
+    --text3: #6b6865;
+    --accent: #c8f563;
+    --accent-dim: rgba(200,245,99,0.12);
+    --red: #ff6b6b;
+    --red-dim: rgba(255,107,107,0.12);
+    --blue: #7eb8f7;
+    --blue-dim: rgba(126,184,247,0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* LAYOUT */
+  .app { max-width: 680px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* HEADER */
+  header { margin-bottom: 2.5rem; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+  header h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 2rem; color: var(--text); line-height: 1.15; }
+  header p { font-size: 0.9rem; color: var(--text3); margin-top: 0.4rem; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .tab {
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.8rem;
+    padding: 0.45rem 1rem; border-radius: 100px;
+    border: 1px solid var(--border2); background: transparent;
+    color: var(--text2); cursor: pointer; letter-spacing: 0.04em;
+    transition: all 0.18s;
+  }
+  .tab:hover { color: var(--text); border-color: var(--border2); }
+  .tab.active { background: var(--accent); color: #0e0e0f; border-color: var(--accent); }
+
+  /* DIRECTION TOGGLE */
+  .dir-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .dir-label { font-size: 0.8rem; color: var(--text3); }
+  .dir-btn {
+    font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 100px;
+    border: 1px solid var(--border); background: transparent; color: var(--text2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .dir-btn.active { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 1.75rem; }
+  .progress-bar { height: 3px; background: var(--surface2); border-radius: 2px; margin-bottom: 0.6rem; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-info { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text3); }
+  .score-ok { color: var(--accent); }
+  .score-err { color: var(--red); }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    margin-bottom: 1.25rem;
+    min-height: 140px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .card-tag { font-size: 0.72rem; color: var(--text3); letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; font-family: 'Syne', sans-serif; }
+  .card-word { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--text); line-height: 1.4; }
+
+  /* MCQ */
+  .options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.25rem; }
+  .opt-btn {
+    text-align: left; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.85rem 1.1rem; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; cursor: pointer;
+    transition: all 0.15s; line-height: 1.4;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--border2); background: #2a2a2d; }
+  .opt-btn.correct { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
+  .opt-btn.wrong { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+  .opt-btn:disabled { cursor: default; }
+
+  /* WORD ORDER */
+  .wo-target {
+    background: var(--surface2); border: 1px dashed var(--border2);
+    border-radius: 12px; padding: 1rem 1.1rem; min-height: 56px;
+    display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+    margin-bottom: 1rem; cursor: pointer;
+  }
+  .wo-bank { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .wo-chip {
+    font-size: 0.88rem; padding: 0.35rem 0.75rem; border-radius: 8px;
+    border: 1px solid var(--border2); background: var(--surface2);
+    color: var(--text); cursor: pointer; transition: all 0.15s; user-select: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .wo-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .wo-chip.placed { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+  .wo-chip.disabled { cursor: default; }
+  .wo-placeholder { font-size: 0.8rem; color: var(--text3); }
+
+  /* FILL BLANK */
+  .sentence { font-size: 1.05rem; color: var(--text); line-height: 1.8; margin-bottom: 1rem; font-family: 'Syne', sans-serif; font-weight: 600; }
+  .blank { display: inline-block; border-bottom: 2px solid var(--accent); min-width: 120px; color: var(--accent); }
+  .fill-input {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 0.7rem 1rem; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 1rem; margin-bottom: 1rem;
+    transition: border-color 0.15s;
+  }
+  .fill-input:focus { outline: none; border-color: var(--accent); }
+  .fill-input.correct { border-color: var(--accent); background: var(--accent-dim); }
+  .fill-input.wrong { border-color: var(--red); background: var(--red-dim); }
+  .hint-text { font-size: 0.82rem; color: var(--text3); margin-bottom: 0.5rem; }
+  .answer-reveal { font-size: 0.9rem; color: var(--accent); background: var(--accent-dim); border-radius: 8px; padding: 0.5rem 0.85rem; margin-bottom: 1rem; display: none; }
+
+  /* FEEDBACK */
+  .feedback { font-size: 0.88rem; font-weight: 500; min-height: 1.4rem; margin-bottom: 1rem; }
+  .feedback.ok { color: var(--accent); }
+  .feedback.err { color: var(--red); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 0.75rem; }
+  .btn {
+    flex: 1; padding: 0.75rem; border-radius: 12px;
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem;
+    border: 1px solid var(--border2); background: transparent; color: var(--text2);
+    cursor: pointer; transition: all 0.15s; letter-spacing: 0.03em;
+  }
+  .btn:hover { color: var(--text); border-color: var(--text2); }
+  .btn-primary { background: var(--accent); color: #0e0e0f; border-color: var(--accent); }
+  .btn-primary:hover { background: #d4f870; border-color: #d4f870; color: #0e0e0f; }
+
+  /* DONE */
+  .done { text-align: center; padding: 3rem 0; }
+  .done-big { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; }
+  .done-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .done-sub { color: var(--text2); font-size: 0.9rem; margin-bottom: 2rem; }
+
+  /* UTILS */
+  .hidden { display: none !important; }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 1.5rem; }
+    .card-word { font-size: 1.05rem; }
+    .opt-btn { font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Дезінформація</h1>
+    <p>78 виразів · 3 типи вправ</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="setExercise('mcq')">Вибрати переклад</button>
+    <button class="tab" onclick="setExercise('order')">Скласти слова</button>
+    <button class="tab" onclick="setExercise('fill')">Вставити слово</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-info">
+      <span><span class="score-ok" id="ok-c">0</span> правильно &nbsp; <span class="score-err" id="err-c">0</span> помилок</span>
+      <span id="left-c">0 / 0</span>
+    </div>
+  </div>
+
+  <div id="exercise-area"></div>
+</div>
+
+<script>
+const vocab = [
+  ["privilégier les informations qui confirment nos opinions","надавати перевагу інформації, яка підтверджує наші думки"],
+  ["rejeter les informations qui contredisent nos opinions","відкидати інформацію, яка суперечить нашим думкам"],
+  ["les contenus qui confortent notre vision du monde","контент, який підкріплює наш світогляд"],
+  ["partir du principe","виходити з принципу"],
+  ["le biais","упередженість"],
+  ["correspondre à ma vision des choses","відповідати моєму баченню речей"],
+  ["ne pas en tenir compte","не брати це до уваги"],
+  ["le contenu suscitant de fortes émotions et générant un maximum d'interactions","контент, що викликає сильні емоції та генерує максимум взаємодій"],
+  ["déclencher des commentaires, des partages, des likes","викликати коментарі, поширення, лайки"],
+  ["les fausses informations","неправдива інформація"],
+  ["se propager","поширюватися"],
+  ["tourner en boucle","крутитися по колу"],
+  ["correspondre à nos préférences","відповідати нашим уподобанням"],
+  ["un terrain propice à la propagation de la désinformation","сприятливий ґрунт для поширення дезінформації"],
+  ["prendre de l'ampleur","набирати масштабу"],
+  ["la manipulation électorale","виборча маніпуляція"],
+  ["le piratage","зламування"],
+  ["se faire passer pour","видавати себе за"],
+  ["usurper des identités","красти особистості"],
+  ["cibler certains groupes","цілитися в певні групи"],
+  ["semer des tensions","сіяти напругу"],
+  ["des trolls russes","російські тролі"],
+  ["semer le chaos, le doute","сіяти хаос, сумнів"],
+  ["monter les électeurs les uns contre les autres","налаштовувати виборців одних проти одних"],
+  ["viser à","мати на меті"],
+  ["remettre en cause","ставити під сумнів"],
+  ["les faits vérifiables","перевірні факти"],
+  ["le flot d'informations contradictoires","потік суперечливої інформації"],
+  ["inonder de merde","заливати брудом"],
+  ["distinguer le vrai du faux","відрізняти правду від брехні"],
+  ["le tuyau d'incendie de mensonges","пожежний шланг брехні"],
+  ["coller parfaitement à ma vision du monde","ідеально вписуватися в мій світогляд"],
+  ["les informations véridiques","правдива інформація"],
+  ["les révélations fondées","обґрунтовані викриття"],
+  ["une vidéo compromettante","компрометуюче відео"],
+  ["les services secrets","спецслужби"],
+  ["reproduire la voix de quelqu'un d'autre","відтворювати чийсь голос"],
+  ["le logiciel de manipulation faciale","програма маніпуляції обличчям"],
+  ["générer des deepfakes en temps réel / en direct","генерувати діпфейки в реальному часі / наживо"],
+  ["ouvrir la voie à toutes sortes d'escroqueries","відкривати шлях до всіляких шахрайств"],
+  ["viser juste","влучати в ціль"],
+  ["l'intelligence artificielle","штучний інтелект"],
+  ["réceptif / réceptive","сприйнятливий / сприйнятлива"],
+  ["s'adresser de manière très ciblée","звертатися дуже цілеспрямовано"],
+  ["un outil redoutablement efficace","надзвичайно ефективний інструмент"],
+  ["comporter des risques","нести ризики"],
+  ["prendre le contrôle de","брати під контроль"],
+  ["manipuler l'opinion publique","маніпулювати громадською думкою"],
+  ["pas question de baisser les bras","не може бути й мови про те, щоб опустити руки"],
+  ["rassurant / rassurante","заспокійливий / заспокійлива"],
+  ["faire le tri","відсіювати"],
+  ["une campagne orchestrée depuis l'étranger","кампанія, організована з-за кордону"],
+  ["les acteurs peu transparents","непрозорі актори"],
+  ["les discours de haine et de désinformation","мова ненависті та дезінформація"],
+  ["un levier fondamental","фундаментальний важіль"],
+  ["renforcer l'éducation aux médias","зміцнювати медіаграмотність"],
+  ["vérifier la véracité","перевіряти достовірність"],
+  ["décrypter","розшифровувати"],
+  ["déconstruire","деконструювати"],
+  ["repérer en amont les mécanismes de la désinformation","виявляти механізми дезінформації заздалегідь"],
+  ["à posteriori","після факту"],
+  ["traquer les mensonges","полювати на брехню"],
+  ["veiller à la sécurité en ligne","стежити за онлайн-безпекою"],
+  ["contrer","протидіяти"],
+  ["repérer un deepfake","розпізнати діпфейк"],
+  ["redoubler d'attention","подвоїти увагу"],
+  ["imperméable à la désinformation","несприйнятливий / несприйнятлива до дезінформації"],
+  ["s'interroger sur la véracité des faits","ставити під сумнів достовірність фактів"],
+  ["fragilisé / fragilisée par la désinformation","ослаблений / ослаблена дезінформацією"],
+  ["la vigilance","пильність"],
+  ["la confiance érodée","підірвана довіра"],
+  ["l'usine à trolls","фабрика тролів"],
+  ["faire preuve de vigilance","проявляти пильність"],
+  ["le déluge d'information","потоп інформації"],
+  ["garder le cap","тримати курс"]
+];
+
+let exercise = 'mcq';
+let dir = 'both';
+let queue = [];
+let ok = 0, err = 0, total = 0;
+let answered = false;
+let current = null;
+let woPlaced = [], woBank = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function setExercise(e) {
+  exercise = e;
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    t.classList.toggle('active', ['mcq','order','fill'][i]===e);
+  });
+  restart();
+}
+
+function setDir(d) {
+  dir = d;
+  document.querySelectorAll('.dir-btn').forEach((b,i)=>{
+    b.classList.toggle('active', ['fr-uk','uk-fr','both'][i]===d);
+  });
+  restart();
+}
+
+function getDir() {
+  if (dir === 'both') return Math.random() < 0.5 ? 'fr-uk' : 'uk-fr';
+  return dir;
+}
+
+function restart() {
+  queue = shuffle(vocab);
+  ok = 0; err = 0; total = queue.length;
+  updateStats();
+  nextQuestion();
+}
+
+function updateStats() {
+  const done = ok + err;
+  document.getElementById('prog').style.width = Math.round(done/total*100)+'%';
+  document.getElementById('ok-c').textContent = ok;
+  document.getElementById('err-c').textContent = err;
+  document.getElementById('left-c').textContent = done+' / '+total;
+}
+
+function getFront(item, d) { return d === 'fr-uk' ? item[0] : item[1]; }
+function getBack(item, d) { return d === 'fr-uk' ? item[1] : item[0]; }
+
+function nextQuestion() {
+  answered = false;
+  if (queue.length === 0) { renderDone(); return; }
+  current = queue.shift();
+  const d = getDir();
+  current._dir = d;
+
+  if (exercise === 'mcq') renderMCQ(current, d);
+  else if (exercise === 'order') renderOrder(current, 'uk-fr');
+  else renderFill(current, 'uk-fr');
+
+}
+
+/* ---- MCQ ---- */
+function renderMCQ(item, d) {
+  const front = getFront(item, d);
+  const back = getBack(item, d);
+  const fromLang = d === 'fr-uk' ? 'Французька' : 'Українська';
+  const toLang = d === 'fr-uk' ? 'Переклад українською' : 'Переклад французькою';
+
+  // get 3 wrong options
+  const others = vocab.filter(v => v !== item);
+  const wrongs = shuffle(others).slice(0, 3).map(v => getBack(v, d));
+  const opts = shuffle([back, ...wrongs]);
+
+  document.getElementById('exercise-area').innerHTML = `
+    <div class="card">
+      <div class="card-tag">${fromLang}</div>
+      <div class="card-word">${front}</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text3);margin-bottom:0.75rem;">${toLang}:</div>
+    <div class="options" id="opts">
+      ${opts.map((o,i)=>`<button class="opt-btn" onclick="checkMCQ(this,'${escQ(o)}','${escQ(back)}')">${o}</button>`).join('')}
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="btn-row hidden" id="next-row">
+      <button class="btn btn-primary" onclick="nextQuestion()">Далі →</button>
+    </div>
+  `;
+}
+
+function escQ(s) { return s.replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
+
+function checkMCQ(btn, chosen, correct) {
+  if (answered) return;
+  answered = true;
+  const isOk = chosen === correct;
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim() === correct) b.classList.add('correct');
+    else if (b === btn && !isOk) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb');
+  if (isOk) { fb.textContent = 'Правильно!'; fb.className='feedback ok'; ok++; }
+  else { fb.textContent = 'Неправильно'; fb.className='feedback err'; err++; }
+  updateStats();
+  document.getElementById('next-row').classList.remove('hidden');
+}
+
+/* ---- WORD ORDER ---- */
+function renderOrder(item, d) {
+  const front = getFront(item, d);
+  const back = getBack(item, d);
+  const fromLang = d === 'fr-uk' ? 'Французька' : 'Українська';
+
+  // tokenize back — split on spaces, keep punctuation attached
+  const tokens = back.split(/\s+/).filter(Boolean);
+  woBank = shuffle([...tokens]);
+  woPlaced = [];
+
+  document.getElementById('exercise-area').innerHTML = `
+    <div class="card">
+      <div class="card-tag">${fromLang}</div>
+      <div class="card-word">${front}</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text3);margin-bottom:0.5rem;">Склади переклад у правильному порядку:</div>
+    <div class="wo-target" id="wo-target" onclick="removeLast()">
+      <span class="wo-placeholder" id="wo-ph">Натисни на слова нижче...</span>
+    </div>
+    <div class="wo-bank" id="wo-bank">
+      ${woBank.map((w,i)=>`<button class="wo-chip" id="chip-${i}" onclick="placeWord(${i},'${escQ(w)}')">${w}</button>`).join('')}
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="btn-row">
+      <button class="btn" onclick="resetOrder()">Скинути</button>
+      <button class="btn btn-primary" id="check-btn" onclick="checkOrder('${escQ(back)}')">Перевірити</button>
+    </div>
+  `;
+}
+
+function placeWord(idx, word) {
+  if (answered) return;
+  const chip = document.getElementById('chip-'+idx);
+  if (!chip || chip.classList.contains('placed')) return;
+  chip.classList.add('placed');
+  chip.onclick = null;
+  woPlaced.push({idx, word});
+  renderTarget();
+}
+
+function renderTarget() {
+  const target = document.getElementById('wo-target');
+  const ph = document.getElementById('wo-ph');
+  if (woPlaced.length === 0) {
+    ph.style.display = 'inline';
+    while (target.children.length > 1) target.removeChild(target.lastChild);
+    return;
+  }
+  ph.style.display = 'none';
+  while (target.children.length > 1) target.removeChild(target.lastChild);
+  woPlaced.forEach(({word}) => {
+    const span = document.createElement('span');
+    span.className = 'wo-chip placed';
+    span.textContent = word;
+    target.appendChild(span);
+  });
+}
+
+function removeLast() {
+  if (answered || woPlaced.length === 0) return;
+  const last = woPlaced.pop();
+  const chip = document.getElementById('chip-'+last.idx);
+  if (chip) { chip.classList.remove('placed'); chip.onclick = ()=>placeWord(last.idx, last.word); }
+  renderTarget();
+}
+
+function resetOrder() {
+  if (answered) return;
+  woPlaced = [];
+  document.querySelectorAll('.wo-chip').forEach((c,i)=>{
+    c.classList.remove('placed');
+  });
+  renderTarget();
+}
+
+function checkOrder(correct) {
+  if (answered) return;
+  const attempt = woPlaced.map(w=>w.word).join(' ');
+  const norm = s => s.toLowerCase().replace(/\s+/g,' ').trim();
+  const isOk = norm(attempt) === norm(correct);
+  answered = true;
+  const fb = document.getElementById('fb');
+  if (isOk) { fb.textContent = 'Правильно!'; fb.className='feedback ok'; ok++; }
+  else { fb.innerHTML = 'Правильна відповідь: <strong style="color:var(--accent)">' + correct + '</strong>'; fb.className='feedback err'; err++; }
+  updateStats();
+  const btn = document.getElementById('check-btn');
+  btn.textContent = 'Далі →';
+  btn.onclick = nextQuestion;
+}
+
+/* ---- FILL IN THE BLANK ---- */
+function renderFill(item, d) {
+  const front = getFront(item, d);
+  const back = getBack(item, d);
+  const fromLang = d === 'fr-uk' ? 'Французька' : 'Українська';
+
+  // pick a key word to blank out — longest word that's not a particle
+  const tokens = back.split(/\s+/).filter(Boolean);
+  const stops = ['la','le','les','de','du','des','un','une','à','en','et','ou','ne','pas','que','qui','se','il','je','tu','на','до','в','з','і','та','що','як','це','не','по','за'];
+  const candidates = tokens.filter(t => !stops.includes(t.toLowerCase()) && t.length > 3);
+  const blankWord = candidates.length > 0 ? candidates[Math.floor(Math.random()*candidates.length)] : tokens[tokens.length-1];
+  const sentence = back.replace(blankWord, '___');
+
+  document.getElementById('exercise-area').innerHTML = `
+    <div class="card">
+      <div class="card-tag">${fromLang}</div>
+      <div class="card-word">${front}</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text3);margin-bottom:0.5rem;">Вставте пропущене слово:</div>
+    <div class="sentence">${sentence.replace('___','<span class="blank">___</span>')}</div>
+    <div class="hint-text">Підказка: ${blankWord.length} букв</div>
+    <input class="fill-input" id="fill-in" type="text" placeholder="Введи слово..." onkeydown="if(event.key==='Enter')checkFill('${escQ(blankWord)}','${escQ(back)}')">
+    <div class="answer-reveal" id="ans-reveal">Правильно: <strong>${blankWord}</strong></div>
+    <div class="feedback" id="fb"></div>
+    <div class="btn-row">
+      <button class="btn" onclick="showHintFill('${escQ(blankWord)}')">Підказка</button>
+      <button class="btn btn-primary" id="fill-btn" onclick="checkFill('${escQ(blankWord)}','${escQ(back)}')">Перевірити</button>
+    </div>
+  `;
+  document.getElementById('fill-in').focus();
+}
+
+function showHintFill(word) {
+  const inp = document.getElementById('fill-in');
+  inp.value = word[0];
+  inp.focus();
+}
+
+function checkFill(blankWord, fullAnswer) {
+  if (answered) return;
+  const inp = document.getElementById('fill-in');
+  const val = inp.value.trim().toLowerCase();
+  const correct = blankWord.toLowerCase();
+  const isOk = val === correct || correct.startsWith(val) && val.length >= correct.length - 2;
+  answered = true;
+  const fb = document.getElementById('fb');
+  const reveal = document.getElementById('ans-reveal');
+  if (isOk) {
+    inp.classList.add('correct');
+    fb.textContent = 'Правильно!'; fb.className = 'feedback ok';
+    ok++;
+  } else {
+    inp.classList.add('wrong');
+    reveal.style.display = 'block';
+    fb.textContent = 'Неправильно'; fb.className = 'feedback err';
+    err++;
+  }
+  inp.disabled = true;
+  updateStats();
+  const btn = document.getElementById('fill-btn');
+  btn.textContent = 'Далі →';
+  btn.onclick = nextQuestion;
+}
+
+/* ---- DONE ---- */
+function renderDone() {
+  const pct = Math.round(ok/(ok+err)*100);
+  document.getElementById('exercise-area').innerHTML = `
+    <div class="done">
+      <div class="done-big">${pct}%</div>
+      <div class="done-title">Раунд завершено!</div>
+      <div class="done-sub">Правильно: ${ok} &nbsp;·&nbsp; Помилок: ${err} &nbsp;·&nbsp; Всього: ${total}</div>
+      <div class="btn-row" style="max-width:300px;margin:0 auto;">
+        <button class="btn btn-primary" onclick="restart()">Ще раз</button>
+      </div>
+    </div>
+  `;
+}
+
+// init
+restart();
+</script>
+</body>
+</html>
